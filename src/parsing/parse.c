@@ -82,8 +82,8 @@ int word_splitting(char *line, char **words, int *word_count)
         if (!words[count]) {
             // Handle allocation failure
 			int i = 0;
-            while (i++ < count)
-                free(words[i]);
+            while (i < count)
+                free(words[i++]);
             ft_free_tab(tokens);
             return -1;
         }
@@ -97,30 +97,36 @@ int word_splitting(char *line, char **words, int *word_count)
     return 0;
 }
 
-
-int main( int argc, char **argv)
+// Fix for main() function
+int main(int argc, char **argv)
 {
-	if (argc != 2)
-	{
-		printf("Usage: %s <string>\n", argv[0]);
-		return 1;
-	}
+    if (argc != 2)
+    {
+        printf("Usage: %s <string>\n", argv[0]);
+        return 1;
+    }
 
-	char *line = argv[1];
-	char *words[100]; // Adjust size as needed
-	int word_count = 0;
+    char *line = argv[1];
+    char *words[100]; // Adjust size as needed
+    int word_count = 0;
 
-	if (word_splitting(line, words, &word_count) == -1)
-	{
-		return 1;
-	}
+    if (word_splitting(line, words, &word_count) == -1)
+    {
+        return 1;
+    }
 
-	for (int i = 0; i < word_count; i++)
-	{
-		printf("Word %d: %s\n", i + 1, words[i]);
-	}
+    for (int i = 0; i < word_count; i++)
+    {
+        printf("Word %d: %s\n", i + 1, words[i]);
+    }
 
-	return 0;
+    // Free all allocated words
+    for (int i = 0; i < word_count; i++)
+    {
+        free(words[i]);
+    }
+
+    return 0;
 }
 // VAR="Hello world" ./parse "\"$VAR"\"
 // Word 1: "Hello world"
