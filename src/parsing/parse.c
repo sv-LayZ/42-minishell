@@ -4,7 +4,13 @@ Parsing
 - recuperation des commandes
 	- interpretations des operateurs
 		- redirections, pipe, $...*/
-
+        
+        
+/*expand special variable
+echo $? return 0 success (if pattern found)
+echo $? retun 1 if pattern not found
+echo $? return 2 error for "no such file or directory", also if pattern not found
+*/
 
 /*expand_variables(line)
 - Determine si la ligne contient des variables d'environnement 
@@ -52,19 +58,24 @@ char *expand_variables(char *line)
 	return result;
 }
 
-
-
-/*expand special variable
-echo $? return 0 success (if pattern found)
-echo $? retun 1 if pattern not found
-echo $? return 2 error for "no such file or directory", also if pattern not found
-*/
-
-
+int get_token_type(t_token *token)
+{
+    if (ft_strcmp(token, "|") == 0)
+        token->type = TOKEN_PIPE; // Pipe
+    else if (ft_strcmp(token, ">") == 0 || strcmp(token, ">>") == 0)
+        token->type = TOKEN_REDIRECT_OUT; // Output redirection
+    else if (ft_strcmp(token, "<") == 0 || strcmp(token, "<<") == 0)
+        token->type = TOKEN_REDIRECT_IN; // Input redirection
+    else if (token->value[0] == '$')
+        token->type = TOKEN_ENV_VAR; // Variable
+    else
+        return 0; // Normal token
+}
 
 /*fonction qui recupere les differentes commandes (token)
 e*/
-int word_splitting(char *line, char **words, int *word_count)
+//strlen token->value
+int str_tokenizer(char *line, char **words, int *word_count)
 {
     char **tokens;
     int count = 0;
@@ -75,64 +86,28 @@ int word_splitting(char *line, char **words, int *word_count)
     char *expanded_line = expand_variables(line);
     if (!expanded_line)
         return -1;
-    tokens = ft_split_ifs(expanded_line, ifs); 
+    tokens = ft_split_str(expanded_line, ifs); // a modif
     free(expanded_line);
     if (!tokens)
     {
         perror("Error splitting line");
         return -1;
     }
-    // Create deep copies of the strings
-    while (tokens[count]) {
-        words[count] = ft_strdup(tokens[count]);  // Make copies of the strings
-        if (!words[count])
-        {
-            // Handle allocation failure
-			int i = 0;
-            while (i < count)
-                free(words[i++]);
-            ft_free_tab(tokens);
-            return -1;
-        }
+
+    while (tokens[count])
+    {
+        get_token_type(tokens[count]);
         count++;
     }
-    
-    words[count] = NULL;
-    *word_count = count;
-    ft_free_tab(tokens);  // Now safe to free
     return 0;
 }
+
+
 
 // Fix for main() function
 int main(int argc, char **argv)
 {
-    if (argc != 2)
-    {
-        printf("Usage: %s <string>\n", argv[0]);
-        return 1;
-    }
-
-    char *line = argv[1];
-    char *words[100]; // Adjust size as needed
-    int word_count = 0;
-
-    if (word_splitting(line, words, &word_count) == -1)
-    {
-        return 1;
-    }
-
-    for (int i = 0; i < word_count; i++)
-    {
-        printf("Word %d: %s\n", i + 1, words[i]);
-    }
-
-    // Free all allocated words
-    for (int i = 0; i < word_count; i++)
-    {
-        free(words[i]);
-    }
-
-    return 0;
+   
 }
 // VAR="Hello world" ./parse "\"$VAR"\"
 // Word 1: "Hello world"
