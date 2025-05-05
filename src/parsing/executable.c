@@ -67,28 +67,55 @@ static t_list	*get_files_in_dir(char *path)
 char	*get_executable_path(char *str)
 {
 	char	**paths;
-	char	*path;
-	char	*temp;
 	t_list	*files;
+	int		i;
 	
 	paths = ft_split(getenv(ENV_PATH), ENV_SEPARATOR);
 	if (!paths)
 		return (NULL);
-
+	i = 0;
+	while (paths[i])
+	{
+		files = get_files_in_dir(paths[i]);
+		if (!files)
+			return (ft_free_tab(paths), NULL);
+		while (files)
+		{
+			if (ft_strncmp(str, files->content, ft_strlen(files->content)) == 0)
+			{
+				ft_lstclear(&files, free);
+				return (paths[i]);
+			}
+			files = files->next;
+		}
+		ft_lstclear(&files, free);
+		i++;
+	}
 }
 
 int main(int argc, char **argv)
 {
-	t_list *files = get_files_in_dir("/usr/bin/dassdas");
-	if (files)
+	// t_list *files = get_files_in_dir(argv[1]);
+	// if (files)
+	// {
+	// 	t_list *temp = files;
+	// 	while (temp)
+	// 	{
+	// 		__builtin_printf("%s\n", (char *)temp->content);
+	// 		temp = temp->next;
+	// 	}
+	// 	ft_lstclear(&files, free);
+	// }
+	// else
+	// {
+	// 	perror("Error");
+	// }
+
+	char *path = get_executable_path(argv[1]);
+	if (path)
 	{
-		t_list *temp = files;
-		while (temp)
-		{
-			__builtin_printf("%s\n", (char *)temp->content);
-			temp = temp->next;
-		}
-		ft_lstclear(&files, free);
+		__builtin_printf("Executable path: %s/%s\n", path, argv[1]);
+		free(path);
 	}
 	else
 	{

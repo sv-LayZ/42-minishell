@@ -53,6 +53,15 @@ char *expand_variables(char *line)
 }
 
 
+
+/*expand special variable
+echo $? return 0 success (if pattern found)
+echo $? retun 1 if pattern not found
+echo $? return 2 error for "no such file or directory", also if pattern not found
+*/
+
+
+
 /*fonction qui recupere les differentes commandes (token)
 e*/
 int word_splitting(char *line, char **words, int *word_count)
@@ -66,20 +75,18 @@ int word_splitting(char *line, char **words, int *word_count)
     char *expanded_line = expand_variables(line);
     if (!expanded_line)
         return -1;
-
     tokens = ft_split_ifs(expanded_line, ifs); 
     free(expanded_line);
-    
     if (!tokens)
     {
         perror("Error splitting line");
         return -1;
     }
-    
     // Create deep copies of the strings
     while (tokens[count]) {
         words[count] = ft_strdup(tokens[count]);  // Make copies of the strings
-        if (!words[count]) {
+        if (!words[count])
+        {
             // Handle allocation failure
 			int i = 0;
             while (i < count)
@@ -92,7 +99,6 @@ int word_splitting(char *line, char **words, int *word_count)
     
     words[count] = NULL;
     *word_count = count;
-
     ft_free_tab(tokens);  // Now safe to free
     return 0;
 }

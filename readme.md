@@ -17,6 +17,12 @@ le shell decoupe une ligne de commande en unites elementaire (token) pour analys
 
 ## Word Splitting : shell divise le resultat des expansions en mots distincts en respectant les regles d'IFS
 
+## Variable Expansion 
+Identifie variables commencant par $ et les remplace par leur valeur d'environnements
+
+## Variable speciale 
+$?
+
 Exemple : 
 	VAR="Hello world"
 echo $VAR  # → echo Hello world (deux arguments distincts)
