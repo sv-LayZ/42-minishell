@@ -5,6 +5,8 @@
 # include <stdlib.h>
 # include <dirent.h>
 # include <errno.h>
+# include <readline/readline.h>
+# include <readline/history.h>
 # include "../libft/libft.h"
 
 # define ENV_SEPARATOR ':'
@@ -13,8 +15,7 @@
 # define ERROR_MEMORY "Memory allocation error"
 # define ERROR_READING_DIR "Error reading directory"
 
-#endif
-
-
-
 // /* **********************************PARSING**************************************** */
+char	*reader(void);
+
+#endif
