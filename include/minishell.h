@@ -6,6 +6,7 @@
 # include <dirent.h>
 # include <errno.h>
 # include <readline/readline.h>
+# include <readline/history.h>
 # include "../libft/libft.h"
 
 # define ENV_SEPARATOR ':'
