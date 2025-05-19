@@ -93,32 +93,32 @@ char	*get_executable_path(char *str)
 	}
 }
 
-int main(int argc, char **argv)
-{
-	// t_list *files = get_files_in_dir(argv[1]);
-	// if (files)
-	// {
-	// 	t_list *temp = files;
-	// 	while (temp)
-	// 	{
-	// 		__builtin_printf("%s\n", (char *)temp->content);
-	// 		temp = temp->next;
-	// 	}
-	// 	ft_lstclear(&files, free);
-	// }
-	// else
-	// {
-	// 	perror("Error");
-	// }
+// int main(int argc, char **argv)
+// {
+// 	// t_list *files = get_files_in_dir(argv[1]);
+// 	// if (files)
+// 	// {
+// 	// 	t_list *temp = files;
+// 	// 	while (temp)
+// 	// 	{
+// 	// 		__builtin_printf("%s\n", (char *)temp->content);
+// 	// 		temp = temp->next;
+// 	// 	}
+// 	// 	ft_lstclear(&files, free);
+// 	// }
+// 	// else
+// 	// {
+// 	// 	perror("Error");
+// 	// }
 
-	char *path = get_executable_path(argv[1]);
-	if (path)
-	{
-		__builtin_printf("Executable path: %s/%s\n", path, argv[1]);
-		free(path);
-	}
-	else
-	{
-		perror("Error");
-	}
-}
+// 	char *path = get_executable_path(argv[1]);
+// 	if (path)
+// 	{
+// 		__builtin_printf("Executable path: %s/%s\n", path, argv[1]);
+// 		free(path);
+// 	}
+// 	else
+// 	{
+// 		perror("Error");
+// 	}
+// }

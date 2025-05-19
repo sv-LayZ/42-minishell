@@ -3,16 +3,16 @@
 
 int main(int ac, char **av)
 {
-	if(ac == 1)
+	char	*line;
+	
+	(void)ac;
+	(void)av;
+	line = reader();
+	while (line)
 	{
-		printf("No command provided.\n");
+		
+		free(line);
+		line = reader();
 	}
-	else if(ac == 2)
-	{
-
-	}
-	// if(ac == 2)
-	// {
-	// 	printf("%s", av[1]);
-	// }
+	free(line);
 }
