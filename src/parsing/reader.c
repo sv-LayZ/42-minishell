@@ -3,14 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   reader.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mregnaut <mregnaut@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: Hadia <Hadia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 10:29:30 by mregnaut          #+#    #+#             */
-/*   Updated: 2025/05/14 10:50:18 by mregnaut         ###   ########.fr       */
+/*   Updated: 2025/05/19 21:26:05 by Hadia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../include/minishell.h"
+#include <readline/readline.h>
+#include <readline/history.h>
+#include <stdio.h>
 
 char	*reader(void)
 {

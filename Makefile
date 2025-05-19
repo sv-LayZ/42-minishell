@@ -12,9 +12,8 @@ all: $(NAME)
 LIB_DIR = libft
 LIBFT = $(LIB_DIR)/libft.a
 
-
 $(NAME): $(OBJ) $(LIBFT)
-	$(CC) $(CFLAGS) $(OBJ) -L$(LIB_DIR) -lft -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJ) -L$(LIB_DIR) -lft -lreadline -o $(NAME)
 
 $(LIBFT): force
 	$(MAKE) -C $(LIB_DIR) bonus
