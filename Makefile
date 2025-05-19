@@ -1,6 +1,6 @@
 C = cc
 CFLAGS = -Wall -Wextra -Werror -Iinclude
-SRC = src/main.c
+SRC = src/parsing/reader.c src/history/history.c
 
 HEADER = include/minishell.h
 
@@ -14,7 +14,7 @@ LIBFT = $(LIB_DIR)/libft.a
 
 
 $(NAME): $(OBJ) $(LIBFT)
-	$(CC) $(CFLAGS) $(OBJ) -L$(LIB_DIR) -lft -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJ) -L$(LIB_DIR) -lft -lreadline -o $(NAME)
 
 $(LIBFT): force
 	$(MAKE) -C $(LIB_DIR) bonus
