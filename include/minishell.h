@@ -5,6 +5,8 @@
 # include <stdlib.h>
 # include <dirent.h>
 # include <errno.h>
+# include <string.h>
+# include <fcntl.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "../libft/libft.h"
@@ -17,5 +19,6 @@
 
 // /* **********************************PARSING**************************************** */
 char	*reader(void);
+char	*get_executable_path(char *str);
 
 #endif

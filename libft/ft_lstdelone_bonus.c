@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstdelone_bonus.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hadia <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: mregnaut <mregnaut@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/15 17:13:33 by hadia             #+#    #+#             */
-/*   Updated: 2024/11/15 17:13:34 by hadia            ###   ########.fr       */
+/*   Created: 2024/11/14 19:10:01 by mregnaut          #+#    #+#             */
+/*   Updated: 2024/11/18 13:00:35 by mregnaut         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 
 void	ft_lstdelone(t_list *lst, void (*del)(void *))
 {
-	if (!lst || !del)
-		return ;
-	(*del)(lst->content);
+	del(lst->content);
 	free(lst);
 }

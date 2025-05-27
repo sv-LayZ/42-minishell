@@ -3,67 +3,53 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hadia <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: mregnaut <mregnaut@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/18 13:02:14 by hadia             #+#    #+#             */
-/*   Updated: 2024/11/20 13:07:00 by hadia            ###   ########.fr       */
+/*   Created: 2024/11/11 20:36:55 by mregnaut          #+#    #+#             */
+/*   Updated: 2024/11/14 17:01:20 by mregnaut         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static size_t	ft_size(int nb)
+static int	ft_intlen(int n)
 {
-	size_t	size;
-	long	num;
+	int	len;
 
-	num = nb;
-	size = 0;
-	if (num < 0)
+	len = 0;
+	if (n <= 0)
+		len = 1;
+	while (n != 0)
 	{
-		num = -num;
-		size = 1;
+		n /= 10;
+		len++;
 	}
-	if (num == 0)
-	{
-		size = 1;
-	}
-	else
-	{
-		while (num)
-		{
-			num = num / 10;
-			size++;
-		}
-	}
-	return (size);
+	return (len);
 }
 
 char	*ft_itoa(int n)
 {
-	long	num;
-	size_t	size;
 	char	*str;
-	size_t	is_neg;
+	long	nb;
+	int		len;
 
-	is_neg = 0;
-	num = n;
-	size = ft_size(num);
-	str = malloc(sizeof(char) * (size + 1));
+	nb = n;
+	len = ft_intlen(n);
+	str = (char *)malloc(sizeof(char) * (len + 1));
 	if (!str)
 		return (NULL);
-	if (num < 0)
+	str[len] = '\0';
+	if (nb < 0)
 	{
-		num = -num;
 		str[0] = '-';
-		is_neg = 1;
+		nb = -nb;
 	}
-	str[size] = '\0';
-	while (size > is_neg)
+	if (nb == 0)
+		str[0] = '0';
+	while (nb > 0)
 	{
-		str[size - 1] = num % 10 + '0';
-		num = num / 10;
-		size--;
+		str[--len] = (nb % 10) + '0';
+		nb /= 10;
 	}
 	return (str);
 }

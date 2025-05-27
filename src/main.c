@@ -7,12 +7,13 @@ int main(int ac, char **av)
 	
 	(void)ac;
 	(void)av;
-	line = reader();
-	while (line)
+	while (1)
 	{
-		
-		free(line);
 		line = reader();
+		// TODO: action here
+		// __builtin_printf("line: $%s$\n", line);
+		// __builtin_printf("line: $%s$\n", get_executable_path("echo"));
+		__builtin_printf("executable: %s\n", get_executable_path(line));
+		free(line);
 	}
-	free(line);
 }
