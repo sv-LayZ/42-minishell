@@ -69,13 +69,13 @@ int get_token_type(t_token *token)
     else if (token->value[0] == '$')
         token->type = TOKEN_ENV_VAR; // Variable
     else
-        return 0; // Normal token
+        return token->type = TOKEN_OTHER; // Normal token
 }
 
 /*fonction qui recupere les differentes commandes (token)
 e*/
 //strlen token->value
-int str_tokenizer(char *line, char **words, int *word_count)
+int str_tokenizer(char *line)
 {
     char **tokens;
     int count = 0;
@@ -86,7 +86,7 @@ int str_tokenizer(char *line, char **words, int *word_count)
     char *expanded_line = expand_variables(line);
     if (!expanded_line)
         return -1;
-    tokens = ft_split_str(expanded_line, ifs); // a modif
+    tokens = ft_split_ifs(expanded_line, ifs); // a modif
     free(expanded_line);
     if (!tokens)
     {
@@ -103,11 +103,5 @@ int str_tokenizer(char *line, char **words, int *word_count)
 }
 
 
-
-// Fix for main() function
-int main(int argc, char **argv)
-{
-   
-}
 // VAR="Hello world" ./parse "\"$VAR"\"
 // Word 1: "Hello world"
