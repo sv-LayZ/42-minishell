@@ -6,7 +6,7 @@
 /*   By: Hadia <Hadia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 10:29:30 by mregnaut          #+#    #+#             */
-/*   Updated: 2025/05/19 21:54:24 by Hadia            ###   ########.fr       */
+/*   Updated: 2025/05/27 16:28:25 by Hadia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ char	*reader(void)
 		free(line);
 		return (NULL);
 	}
+	line = expand_variables(line);
+	printf("You variable: %s\n", line);
 	history_process(line);
 	return (line);
 }

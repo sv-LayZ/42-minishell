@@ -1,6 +1,6 @@
 C = cc
 CFLAGS = -Wall -Wextra -Werror -Iinclude
-SRC = src/parsing/reader.c src/history/history.c
+SRC = src/parsing/reader.c src/history/history.c src/main.c src/parsing/parse.c
 
 HEADER = include/minishell.h
 
