@@ -78,11 +78,9 @@ char	*get_executable_path(char *str)
 	i = 0;
 	while (paths[i])
 	{
-		__builtin_printf("paths: %s\n", paths[i]);
 		files = get_files_in_dir(paths[i]);
 		if (!files)
 		{
-			__builtin_printf("files: %s\n", (char *)files->content);
 			return (NULL); // TODO: free paths
 		}
 		while (files)
@@ -97,7 +95,6 @@ char	*get_executable_path(char *str)
 		ft_lstclear(&files, free);
 		i++;
 	}
-	__builtin_printf("paths end: %s\n", paths[i]);
 	return (NULL);
 }
 
