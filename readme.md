@@ -40,3 +40,18 @@ shell enfant Mattis
 
 - redirection entre/sortit
 commande externe : creation de processus enfant : Mattis.
+
+
+## execution
+
+
+Trouver le path de la commande a executer
+ si la command n'est pas trouve "command not found"
+
+
+ >> > << < tcsetattr
+
+## historique des commands
+
+reproduire ~ cat .bash_history
+history > history,txt 
