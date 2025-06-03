@@ -10,13 +10,16 @@
 # include <fcntl.h>
 # include <readline/readline.h>
 # include <readline/history.h>
-# include "../libft/libft.h"
+# include "libft.h"
 
 # define ENV_SEPARATOR ':'
 # define ENV_PATH "PATH"
 
 # define ERROR_MEMORY "Memory allocation error"
 # define ERROR_READING_DIR "Error reading directory"
+
+# define BUILTIN_STR "echo", 		"cd",		NULL
+# define BUILTIN_FUNC builtin_echo,	builtin_echo,	NULL
 
 typedef enum e_token_type
 {
@@ -36,5 +39,7 @@ typedef struct s_token
 // /* **********************************PARSING**************************************** */
 char	*reader(void);
 char	*get_executable_path(char *str);
+
+int	builtin_echo(char **args);
 
 #endif
