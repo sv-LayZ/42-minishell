@@ -102,12 +102,32 @@ int str_tokenizer(char *line, char **words, int *word_count)
     return 0;
 }
 
-
-
 // Fix for main() function
 int main(int argc, char **argv)
 {
-   
+	if (argc < 2)
+	{
+		fprintf(stderr, "Usage: %s <string>\n", argv[0]);
+		return 1;
+	}
+
+	char *line = argv[1];
+	char *expanded_line = expand_variables(line);
+	if (!expanded_line)
+		return 1;
+
+	printf("Expanded line: %s\n", expanded_line);
+	free(expanded_line);
+
+	char *words[100];
+	int word_count = 0;
+	if (str_tokenizer(line, words, &word_count) == -1)
+		return 1;
+
+	for (int i = 0; i < word_count; i++)
+		printf("Word %d: %s\n", i + 1, words[i]);
+
+	return 0;
 }
 // VAR="Hello world" ./parse "\"$VAR"\"
 // Word 1: "Hello world"
