@@ -11,7 +11,7 @@ Objectif Minishell
 - interpretations des operateurs (redirections, pipe, $...)
 
 
-# Tokenisation
+## Tokenisation: Haby
 le shell decoupe une ligne de commande en unites elementaire (token) pour analyser et executer
 
 
@@ -29,18 +29,33 @@ echo $VAR  # → echo Hello world (deux arguments distincts)
 echo "$VAR"  # → echo "Hello world" (un seul argument)	
 
 Execution shell parent, (gestion interface principale(prompt, lecture des commandes, historique))
-- Execution Commands interne : aller chercher dans le shell (cd, echo,...) Haby
+
+## Tokenisation
+... (rempli les étapes à faire)
+
+## Shell Basis
+- [x] Readline [mregnaut](https://profile.intra.42.fr/users/mregnaut)
+- [ ] History [hadia](https://profile.intra.42.fr/users/hadia)
+- [ ] Environment variables interpretation [hadia](https://profile.intra.42.fr/users/hadia)
+- [ ] Environment variables setter [hadia](https://profile.intra.42.fr/users/hadia)
 
 
-- interpretation des commandes 
 
-expansions des variables ($, $?)
-tokenisation : Haby
-shell enfant Mattis
+## External execution [mregnaut](https://profile.intra.42.fr/users/mregnaut)
+- [ ] anything already in $PATH
+- [ ] from absolute path
 
-- redirection entre/sortit
-commande externe : creation de processus enfant : Mattis.
+## Built-in commands [mregnaut](https://profile.intra.42.fr/users/mregnaut)
 
+- [ ] echo (-e)
+- [ ] cd
+- [ ] pwd
+- [ ] export
+- [ ] unset
+- [ ] env
+- [ ] exit
+
+https://cdn.intra.42.fr/pdf/pdf/146856/en.subject.pdf
 
 ## execution
 

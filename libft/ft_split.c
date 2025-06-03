@@ -3,117 +3,75 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hadia <hadia@student.42lyon.fr>            +#+  +:+       +#+        */
+/*   By: mregnaut <mregnaut@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/20 11:37:14 by hadia             #+#    #+#             */
-/*   Updated: 2025/05/04 21:04:31 by hadia            ###   ########.fr       */
+/*   Created: 2024/11/18 14:20:15 by mregnaut          #+#    #+#             */
+/*   Updated: 2024/11/19 20:50:15 by mregnaut         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-/*fonction compte nombre mot dans s*/
-static int	ft_count_word(char *s, char c)
+static int	ft_add_word(t_list **lst, char *s, size_t len)
 {
-	int	count;
-	int	in_word;
+	t_list	*new;
+	char	*word;
 
-	count = 0;
-	in_word = 0;
-	while (*s)
-	{
-		if (*s != c && !in_word)
-		{
-			in_word = 1;
-			count++;
-		}
-		else if (*s == c)
-		{
-			in_word = 0;
-		}
-		s++;
-	}
-	return (count);
-}
-
-/*fonction complete tab a l'aide de substr*/
-static int	write_split(char **tab, char const *s, char c)
-{
-	int	start;
-	int	i;
-	int	j;
-
-	i = 0;
-	j = 0;
-	while (s[i])
-	{
-		while (s[i] == c)
-			i++;
-		start = i;
-		while (s[i] && s[i] != c)
-			i++;
-		if (i > start)
-		{
-			tab[j] = ft_substr(s, start, i - start);
-			if (!tab[j])
-			{
-				ft_free_tab(tab);
-				return (0);
-			}
-			j++;
-		}
-	}
+	word = ft_substr(s - len, 0, len);
+	if (!word)
+		return (0);
+	new = ft_lstnew(word);
+	if (!new)
+		return (free(word), 0);
+	ft_lstadd_back(lst, new);
 	return (1);
 }
 
-/*fonction check securite malloc, gere overflow*/
+static int	ft_create_lst(t_list **lst, char *s, char c)
+{
+	size_t	len;
+
+	len = 0;
+	while (*s)
+	{
+		if (*s == c && len)
+		{
+			if (!ft_add_word(lst, s, len))
+				return (0);
+			len = 0;
+		}
+		else if (*s != c)
+			len++;
+		s++;
+	}
+	if (len)
+		if (!ft_add_word(lst, s, len))
+			return (0);
+	return (1);
+}
+
 char	**ft_split(char const *s, char c)
 {
-	size_t	words;
+	t_list	*lst;
+	t_list	*tmp;
+	size_t	i;
 	char	**tab;
 
-	if (!s)
-		return (NULL);
-	words = ft_count_word((char *)s, c);
-	tab = malloc(sizeof(char *) * (words + 1));
+	i = 0;
+	lst = NULL;
+	if (!ft_create_lst(&lst, (char *)s, c))
+		return (ft_lstclear(&lst, free), NULL);
+	tab = malloc(sizeof(char *) * (ft_lstsize(lst) + 1));
 	if (!tab)
-		return (NULL);
-	if (!write_split(tab, s, c))
+		return (ft_lstclear(&lst, free), NULL);
+	tmp = lst;
+	while (lst)
 	{
-		return (NULL);
+		tab[i++] = (char *)(lst->content);
+		tmp = lst;
+		lst = lst->next;
+		free(tmp);
 	}
-	tab[words] = NULL;
+	tab[i] = NULL;
 	return (tab);
 }
-/*int main(int argc, char **argv)
-{
-		if (argc != 3)
-		{
-				printf("Usage: %s <string> <delimiter>\n", argv[0]);
-				return (1);
-		}
-
-		char *string = argv[1];
-		char delimiter = argv[2][0];
-
-
-		char **result = ft_split(string, delimiter);
-
-		if (!result)
-		{
-				printf("Error: Memory allocation failed.\n");
-				return (1);
-		}
-
-
-		printf("Split result:\n");
-		for (int i = 0; result[i] != NULL; i++)
-		{
-				printf("[%d]: %s\n", i, result[i]);
-		}
-
-
-		ft_free_tab(result);
-
-		return (0);
-}*/

@@ -3,16 +3,17 @@
 
 int main(int ac, char **av)
 {
-	if(ac == 1)
+	char	*line;
+	
+	(void)ac;
+	(void)av;
+	while (1)
 	{
-		printf("No command provided.\n");
+		line = reader();
+		// TODO: action here
+		// __builtin_printf("line: $%s$\n", line);
+		// __builtin_printf("line: $%s$\n", get_executable_path("echo"));
+		__builtin_printf("executable: %s\n", get_executable_path(line));
+		free(line);
 	}
-	else if(ac == 2)
-	{
-
-	}
-	// if(ac == 2)
-	// {
-	// 	printf("%s", av[1]);
-	// }
 }

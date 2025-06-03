@@ -6,6 +6,10 @@
 # include <stdlib.h>
 # include <dirent.h>
 # include <errno.h>
+# include <string.h>
+# include <fcntl.h>
+# include <readline/readline.h>
+# include <readline/history.h>
 # include "../libft/libft.h"
 
 # define ENV_SEPARATOR ':'
@@ -29,8 +33,8 @@ typedef struct s_token
 	e_token_type type;
 } t_token;
 
-#endif
-
-
-
 // /* **********************************PARSING**************************************** */
+char	*reader(void);
+char	*get_executable_path(char *str);
+
+#endif
