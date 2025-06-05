@@ -59,7 +59,6 @@ typedef struct t_token
 
 // /* **********************************PARSING**************************************** */
 char	*reader(void);
-char *expand_variables(char *line);
 int history_process(char *line);
 // /* **********************************UTILS**************************************** */
 
@@ -77,6 +76,13 @@ t_token_type get_redirection_type(const char *line);
 t_token_type get_operator_type(const char *line);
 void free_tokens(t_token *head);
 
+// /* **********************************PARSE**************************************** */
+int is_argument_type(t_token_type type);
+int is_redirection(t_token_type type);
 char **ft_split_str(char const *s, char *delimiters);
-
+int add_arg(t_cmd *cmd, char *arg);
+void append_command(t_cmd **head, t_cmd *new_cmd);
+t_cmd *new_command(void);
+t_cmd *parse_tokens(t_token *tokens);
+t_token *line_lexer(const char *line);
 #endif

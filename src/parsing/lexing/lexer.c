@@ -68,7 +68,7 @@ t_token *line_lexer(const char *line)
 // // Test
 // int main()
 // {
-//     const char *input = "echo \"hello $USER\" | grep 'abc $USER' > output.txt";
+//     const char *input = "ZAZA=ddd & echo \"hello $USER\" zizi zooz -e fdsfsf | grep 'abc $USER' > output.txt";
 //     t_token *tokens = line_lexer(input);
 
 //     t_token *tmp = tokens;
