@@ -1,11 +1,10 @@
 C = cc
 CFLAGS = -Wall -Wextra -Werror -Iinclude
-SRC = src/parsing/reader.c src/history/history.c src/main.c src/parsing/parse.c
-
+SRC = src/parsing/lexing/lexer.c 
 HEADER = include/minishell.h
 
 OBJ = $(SRC:.c=.o)
-NAME = minishell
+NAME = lexer_test
 
 all: $(NAME)
 

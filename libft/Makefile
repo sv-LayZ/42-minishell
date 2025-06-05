@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mregnaut <mregnaut@student.42lyon.fr>      +#+  +:+       +#+         #
+#    By: Hadia <Hadia@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/04 15:56:12 by mregnaut          #+#    #+#              #
-#    Updated: 2025/05/27 16:02:39 by mregnaut         ###   ########.fr        #
+#    Updated: 2025/06/05 14:47:41 by Hadia            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,6 +38,7 @@ FILES = ft_bzero.c \
 		ft_atoi.c \
 		ft_calloc.c \
 		ft_strdup.c \
+		ft_strndup.c \
 		ft_memmove.c \
 		ft_putchar_fd.c \
 		ft_putendl_fd.c \
