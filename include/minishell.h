@@ -30,12 +30,15 @@ typedef enum e_token_type
 typedef struct t_token
 {
     t_token_type type;
-    char *value;
+    char **value;
 } t_token;
 
 // /* **********************************PARSING**************************************** */
 char	*reader(void);
 char *expand_variables(char *line);
 int history_process(char *line);
+// /* **********************************UTILS**************************************** */
+
+char **ft_split_str(char const *s, char *delimiters);
 
 #endif

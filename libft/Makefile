@@ -3,56 +3,94 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: hadia <hadia@student.42lyon.fr>            +#+  +:+       +#+         #
+#    By: mregnaut <mregnaut@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2024/11/06 14:40:16 by hadia             #+#    #+#              #
-#    Updated: 2025/05/04 22:17:47 by hadia            ###   ########.fr        #
+#    Created: 2024/11/04 15:56:12 by mregnaut          #+#    #+#              #
+#    Updated: 2025/05/27 16:02:39 by mregnaut         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CC= cc
+NAME = libft.a
 
-CFLAGS=	-Wall -Werror -Wextra -I.
+CFLAGS = -Wall \
+		 -Werror \
+		 -Wextra
+		 
+CC = cc
+ARFLAGS = rcs
+AR = ar
 
-SRC= ft_isalpha.c ft_isdigit.c ft_isalnum.c ft_isascii.c ft_isprint.c\
-     ft_strlen.c ft_memset.c ft_bzero.c ft_memcpy.c ft_memmove.c ft_memchr.c\
-     ft_strlcpy.c ft_strlcat.c ft_tolower.c ft_toupper.c ft_atoi.c\
-     ft_strjoin.c ft_strtrim.c ft_strchr.c ft_strrchr.c ft_strncmp.c\
-     ft_memcmp.c ft_strnstr.c ft_strdup.c ft_calloc.c\
-     ft_substr.c ft_strjoin.c ft_strtrim.c\
-     ft_putchar_fd.c ft_putstr_fd.c ft_putendl_fd.c\
-     ft_strmapi.c ft_striteri.c ft_putnbr_fd.c ft_split.c ft_split_ifs.c ft_itoa.c
-SRC_BONUS= ft_lstnew_bonus.c ft_lstadd_front_bonus.c\
-	   ft_lstsize_bonus.c ft_lstlast_bonus.c ft_lstadd_back_bonus.c\
-	   ft_lstdelone_bonus.c ft_lstclear_bonus.c ft_lstiter_bonus.c ft_lstmap_bonus.c\
+FILES = ft_bzero.c \
+		ft_isalnum.c \
+		ft_isalpha.c \
+		ft_isascii.c \
+		ft_isdigit.c \
+		ft_isprint.c \
+		ft_memchr.c \
+		ft_memcmp.c \
+		ft_memcpy.c \
+		ft_memset.c \
+		ft_strchr.c \
+		ft_strlen.c \
+		ft_strrchr.c \
+		ft_tolower.c \
+		ft_toupper.c \
+		ft_atoi.c \
+		ft_calloc.c \
+		ft_strdup.c \
+		ft_memmove.c \
+		ft_putchar_fd.c \
+		ft_putendl_fd.c \
+		ft_putnbr_fd.c \
+		ft_putstr_fd.c \
+		ft_strjoin.c \
+		ft_strlcat.c \
+		ft_strlcpy.c \
+		ft_strncmp.c \
+		ft_strcmp.c \
+		ft_strnstr.c \
+		ft_strtrim.c \
+		ft_substr.c \
+		ft_itoa.c \
+		ft_strmapi.c \
+		ft_striteri.c \
+		ft_split.c \
+		get_next_line.c \
+		gnl_utils.c
 
-HEADER= libft.h
+BONUS =	ft_lstnew_bonus.c \
+		ft_lstadd_front_bonus.c \
+		ft_lstsize_bonus.c \
+		ft_lstlast_bonus.c \
+		ft_lstadd_back_bonus.c \
+		ft_lstdelone_bonus.c \
+		ft_lstclear_bonus.c \
+		ft_lstiter_bonus.c \
+		ft_lstmap_bonus.c
 
-SRC_ALL= $(SRC) $(SRC_BONUS)
+OBJECTS = $(FILES:.c=.o)
 
-OBJ=	$(SRC:.c=.o)
+BONUS_OBJECTS = $(BONUS:.c=.o)
 
-OBJ_ALL= $(SRC_ALL:.c=.o)
+HEADERS = libft.h
 
-NAME=	libft.a
-
+.PHONY: all
 all: $(NAME)
 
-$(NAME): $(OBJ) 
-	ar -rcs $@ $^
+$(NAME): $(OBJECTS) $(HEADERS)
+	$(AR) $(ARFLAGS) $@ $(OBJECTS)
 
-bonus: $(OBJ_ALL)
-	ar -rcs $(NAME) $(OBJ_ALL)
+.PHONY: clean
+clean:
+	rm -rf $(OBJECTS) $(BONUS_OBJECTS)
 
-%.o: %.c $(HEADER)
-	$(CC) $(CFLAGS) -c $< -o $@ -I .
-
-clean: 
-	rm -f $(OBJ) $(OBJ_ALL)
-
+.PHONY: fclean
 fclean: clean
-	rm -f $(NAME)
+	rm -rf $(NAME)
 
+.PHONY: re
 re: fclean all
 
-.PHONY:  all clean fclean re bonus
+.PHONY: bonus
+bonus: $(HEADERS)
+	$(MAKE) $(NAME) FILES="$(FILES) $(BONUS)"

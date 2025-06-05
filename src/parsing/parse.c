@@ -58,18 +58,18 @@ char *expand_variables(char *line)
 	return result;
 }
 
-int get_token_type(t_token *token)
+t_token_type set_token_type()
 {
-    if (ft_strcmp(token, "|") == 0)
-        token->type = TOKEN_PIPE; // Pipe
-    else if (ft_strcmp(token, ">") == 0 || strcmp(token, ">>") == 0)
-        token->type = TOKEN_REDIRECT_OUT; // Output redirection
-    else if (ft_strcmp(token, "<") == 0 || strcmp(token, "<<") == 0)
-        token->type = TOKEN_REDIRECT_IN; // Input redirection
-    else if (token->value[0] == '$')
-        token->type = TOKEN_ENV_VAR; // Variable
-    else
-        return token->type = TOKEN_OTHER; // Normal token
+		if (ft_strcmp(token->value, "|") == 0)
+			token->type = TOKEN_PIPE; // Pipe
+		else if (ft_strcmp(token->value, ">") == 0 || strcmp(token->value, ">>") == 0)
+			token->type = TOKEN_REDIRECT_OUT; // Output redirection
+		else if (ft_strcmp(token->value, "<") == 0 || strcmp(token->value, "<<") == 0)
+			token->type = TOKEN_REDIRECT_IN; // Input redirection
+		// else if (token->value[0] == '$')
+			// token->type = TOKEN_ENV_VAR; // Variable
+		else
+			token->type = TOKEN_OTHER; // Normal token
 }
 
 /*fonction qui recupere les differentes commandes (token)
@@ -77,7 +77,9 @@ e*/
 //strlen token->value
 int str_tokenizer(char *line)
 {
-    char **tokens;
+	t_token *token;
+	token = malloc(sizeof(t_token));
+	
     int count = 0;
     char *ifs = getenv("IFS");
     if (!ifs)
@@ -86,17 +88,17 @@ int str_tokenizer(char *line)
     char *expanded_line = expand_variables(line);
     if (!expanded_line)
         return -1;
-    tokens = ft_split_ifs(expanded_line, ifs); // a modif
+    token->value = ft_split_str(expanded_line, ifs); // a modif
     free(expanded_line);
-    if (!tokens)
+    if (!token->value)
     {
         perror("Error splitting line");
         return -1;
     }
 
-    while (tokens[count])
+    while (token->value[count])
     {
-        get_token_type(tokens[count]);
+        set_token_type(token->value[count]);
         count++;
     }
     return 0;
