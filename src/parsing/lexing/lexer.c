@@ -65,19 +65,19 @@ t_token *line_lexer(const char *line)
 
 
 
-// Test
-int main()
-{
-    const char *input = "echo \"hello $USER\" | grep 'abc $USER' > output.txt";
-    t_token *tokens = line_lexer(input);
+// // Test
+// int main()
+// {
+//     const char *input = "echo \"hello $USER\" | grep 'abc $USER' > output.txt";
+//     t_token *tokens = line_lexer(input);
 
-    t_token *tmp = tokens;
-    while (tmp)
-    {
-        printf("Token: [%s], Type: %d, Quoted: %d\n", tmp->value, tmp->type, tmp->quoted);
-        tmp = tmp->next;
-    }
+//     t_token *tmp = tokens;
+//     while (tmp)
+//     {
+//         printf("Token: [%s], Type: %d, Quoted: %d\n", tmp->value, tmp->type, tmp->quoted);
+//         tmp = tmp->next;
+//     }
 
-    free_tokens(tokens);
-    return 0;
-}
+//     free_tokens(tokens);
+//     return 0;
+// }
