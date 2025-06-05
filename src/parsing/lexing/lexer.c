@@ -1,89 +1,83 @@
 #include "../../../include/minishell.h"
 
-int skip_whitespace(const char *line)
+
+
+
+static int is_redirect_type(int type)
 {
-    int i = 0;
-    while (line[i] && (line[i] == ' ' || line[i] == '\t'))
-        i++;
-    return i;
+    return (type == TOKEN_REDIRECT_OUT ||
+            type == TOKEN_REDIRECT_IN ||
+            type == TOKEN_REDIRECT_APPEND ||
+            type == TOKEN_HEREDOC);
 }
-int is_quote(char c)
+
+void refine_token_types(t_token *head)
 {
-    return (c == '\'' || c == '\"');
-}
+    t_token *tmp = head;
+    int command_found = 0;
 
-
-int token_len(const char *line, int *quoted)
-{
-    int i = 0;
-    *quoted = 0;
-
-    if (line[i] == '\'' || line[i] == '\"')
+    while (tmp)
     {
-        char quote_char = line[i];
-        *quoted = 1;
-        i++; // Skip the opening quote
-
-        while (line[i] && line[i] != quote_char)
-            i++;
-
-        if (line[i] == quote_char)
-            i++; // Include the closing quote
-        return i;
-    }
-    else
-    {
-        while (line[i] && line[i] != ' ' && line[i] != '\t' &&
-               !is_quote(line[i]) &&
-               get_redirection_type(&line[i]) == TOKEN_OTHER &&
-               get_operator_type(&line[i]) == TOKEN_OTHER)
+         if (tmp->type == TOKEN_PIPE)
+            command_found = 0;
+        if (tmp->type == TOKEN_OTHER)
         {
-            i++;
-        }
-        return i;
-    }
-}
-
-/*Analyser la ligne de commande line,
-découper cette ligne en tokens (unités lexicales) correctement typées,
-et construire une liste chaînée de ces tokens.*/
-
-t_token *line_lexer(char *line)
-{
-    t_token *head = NULL;
-    t_token *tail = NULL;
-    t_token_type last_type = TOKEN_OTHER;
-
-    int i = 0;
-    while (line[i])
-    {
-        i += skip_whitespace(&line[i]);
-        if (!line[i])
-            break;
-
-        int quoted = 0;
-int total_len = token_len(&line[i], &quoted);
-int val_len = total_len;
-        int start = i;
-        if (quoted && (line[i] == '\'' || line[i] == '\"'))
-        {
-            start++;
-            val_len -= 2;
-        }
-
-        char *val = ft_strndup(&line[start], val_len);
-        t_token_type type = detect_type(&line[i], quoted, last_type);
-
-        t_token *tok = create_token(type, val, quoted);
-        add_token(&head, &tail, tok);
-
-            free(val);
-            if (quoted)
-                i += total_len + 2;
+            if (!command_found)
+            {
+                tmp->type = TOKEN_COMMAND;
+                command_found = 1;
+            }
+            else if (tmp->prev && is_redirect_type(tmp->prev->type))
+                tmp->type = TOKEN_FILE;
             else
-                i += total_len;  
-
-        last_type = type;
+                tmp->type = TOKEN_ARGUMENT;
+        }
+        tmp = tmp->next;
     }
+}
+// La fonction line_lexer complète
+t_token *line_lexer(const char *line)
+{
+    int index = 0;
+    char *value;
+    t_token *head = NULL;
+    t_token *token;
+
+    while ((value = extract_token(line, &index)) != NULL)
+    {
+        int quoted = 0;
+        size_t len = strlen(value);
+        if ((value[0] == '\'' && value[len-1] == '\'')
+        || (value[0] == '"' && value[len-1] == '"'))
+            quoted = 1;
+        token = new_token(value, quoted);
+        free(value);
+        if (!token)
+        {
+            free_tokens(head);
+            return NULL;
+        }
+        append_token(&head, token);
+    }
+    refine_token_types(head);
     return head;
+}
+
+
+
+// Test
+int main()
+{
+    const char *input = "echo \"hello $USER\" | grep 'abc $USER' > output.txt";
+    t_token *tokens = line_lexer(input);
+
+    t_token *tmp = tokens;
+    while (tmp)
+    {
+        printf("Token: [%s], Type: %d, Quoted: %d\n", tmp->value, tmp->type, tmp->quoted);
+        tmp = tmp->next;
+    }
+
+    free_tokens(tokens);
+    return 0;
 }

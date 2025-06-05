@@ -1,6 +1,6 @@
 C = cc
 CFLAGS = -Wall -Wextra -Werror -Iinclude
-SRC = src/parsing/lexing/lexer.c 
+SRC = src/parsing/lexing/lexer.c src/parsing/lexing/lexer_utils.c src/parsing/lexing/detect_type.c
 HEADER = include/minishell.h
 
 OBJ = $(SRC:.c=.o)

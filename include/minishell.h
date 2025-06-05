@@ -36,9 +36,10 @@ typedef enum e_token_type
     TOKEN_ENV_VAR,
     TOKEN_COMMAND,
     TOKEN_ARGUMENT,
-    TOKEN_OTHER,
     TOKEN_REDIRECT_APPEND,
     TOKEN_HEREDOC,
+    TOKEN_FILE,
+    TOKEN_OTHER
 } t_token_type;
 
 typedef struct s_operator_map
@@ -64,7 +65,18 @@ int history_process(char *line);
 
 
 // /* **********************************LEXING**************************************** */
-t_token *line_lexer(char *line);
+
+t_token_type get_token_type(const char *value);
+t_token *create_token(t_token_type type, const char *value, int quoted);
+void append_token(t_token **head, t_token *new_tok);
+int operator_token_length(const char *str);
+char *extract_token(const char *input, int *index);
+int is_operator_char(char c);
+t_token *new_token(const char *value, int quoted);
+t_token_type get_redirection_type(const char *line);
+t_token_type get_operator_type(const char *line);
+void free_tokens(t_token *head);
+
 char **ft_split_str(char const *s, char *delimiters);
 
 #endif
