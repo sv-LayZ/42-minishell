@@ -1,11 +1,13 @@
-t_command *new_command(void);
+#include "../../include/minishell.h"
 
-void add_arg(t_command *cmd, char *arg);
+t_cmd *new_command(void);
 
-void append_command(t_command **list, t_command *cmd);
-void append_command(t_command **head, t_command *new_cmd)
+void add_arg(t_cmd *cmd, char *arg);
+
+void append_command(t_cmd **list, t_cmd *cmd);
+void append_command(t_cmd **head, t_cmd *new_cmd)
 {
-    t_command *tmp;
+    t_cmd *tmp;
 
     if (!head || !new_cmd)
         return;
@@ -20,7 +22,7 @@ void append_command(t_command **head, t_command *new_cmd)
     tmp->next = new_cmd;
 }
 
-void free_commands(t_command *cmd);
+void free_commands(t_cmd *cmd);
 
 int is_argument_type(t_token_type type);
 
