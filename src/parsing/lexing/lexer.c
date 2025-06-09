@@ -45,11 +45,13 @@ t_token *line_lexer(const char *line)
 
     while ((value = extract_token(line, &index)) != NULL)
     {
-        int quoted = 0;
+        t_quote_type quoted = NO_QUOTE;
+
         size_t len = strlen(value);
-        if ((value[0] == '\'' && value[len-1] == '\'')
-        || (value[0] == '"' && value[len-1] == '"'))
-            quoted = 1;
+        if (value[0] == '\'' && value[len-1] == '\'')
+            quoted = SINGLE_QUOTE;
+        else if (value[0] == '"' && value[len-1] == '"')
+            quoted = DOUBLE_QUOTE;
         token = new_token(value, quoted);
         free(value);
         if (!token)

@@ -9,7 +9,7 @@ t_cmd *new_command(void)
     cmd->input_file = NULL;
     cmd->output_file = NULL;
     cmd->append_output = 0;
-    // cmd->heredoc = 0;
+    cmd->heredoc = 0;
     cmd->next = NULL;
     return cmd;
 }

@@ -6,7 +6,7 @@
 /*   By: Hadia <Hadia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 10:29:30 by mregnaut          #+#    #+#             */
-/*   Updated: 2025/05/27 16:28:25 by Hadia            ###   ########.fr       */
+/*   Updated: 2025/06/09 16:21:00 by Hadia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 char	*reader(void)
 {
 	char	*line;
+	t_cmd	*cmds;
 
 	line = readline("Minishell> ");
 	if (!line)
@@ -27,8 +28,7 @@ char	*reader(void)
 		free(line);
 		return (NULL);
 	}
-	line = expand_variables(line);
-	printf("You variable: %s\n", line);
-	history_process(line);
+	cmds = parsing(line); // Parse the input line into commands
+	print_commands(cmds);
 	return (line);
 }

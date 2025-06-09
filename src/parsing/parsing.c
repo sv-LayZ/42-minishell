@@ -1,18 +1,14 @@
-/*Parcourir la liste de tokens
 
-À chaque TOKEN_PIPE, créer une nouvelle t_cmd
 
-Remplir les champs :
+/*La fonction parse_tokens transforme la liste de tokens (issue du lexer) en une liste chaînée de structures t_cmd, chacune représentant une commande à exécuter, avec ses arguments, ses fichiers de redirection, et les informations de pipe/heredoc.
 
-args : tous les TOKEN_COMMAND et TOKEN_ARGUMENT
+Cela aide l'exécuteur car il n'a plus à analyser la ligne brute : il reçoit une structure claire et prête à l’emploi, où :
 
-infile : fichier après < ou <<
+Chaque nœud t_cmd correspond à une commande du pipeline.
+Les champs args, input_file, output_file, append_output, heredoc sont déjà remplis.
+La liste chaînée (next) permet de parcourir les commandes à exécuter dans l’ordre (utile pour gérer les pipes).*/
 
-outfile : fichier après > ou >>
-
-append / heredoc selon les cas*/
-
-#include "../../../include/minishell.h"
+#include "../../include/minishell.h"
 
 t_cmd *parse_tokens(t_token *tokens)
 {
@@ -30,6 +26,14 @@ t_cmd *parse_tokens(t_token *tokens)
         }
         else if (is_argument_type(tokens->type))
         {
+            if(tokens->quote_type == DOUBLE_QUOTE)
+            {
+                char *expanded = expand_variables(tokens->value);
+                free(tokens->value);
+                tokens->value = expanded;
+                if (!tokens->value)
+                    return NULL; // erreur d'expansion
+            }
             if (!add_arg(current, tokens->value))
                 return NULL;
         }
@@ -49,7 +53,7 @@ t_cmd *parse_tokens(t_token *tokens)
             else if (tokens->type == TOKEN_HEREDOC)
             {
                 current->input_file = strdup(tokens->next->value);
-                //current->heredoc = 1;
+                current->heredoc = 1;
             }
             tokens = tokens->next;
         }
@@ -60,3 +64,15 @@ t_cmd *parse_tokens(t_token *tokens)
     return head;
 }
 
+t_cmd *parsing(const char *line)
+{
+    t_token *tokens;
+    t_cmd   *cmds;
+
+    tokens = line_lexer(line);
+    if (!tokens)
+        return NULL;
+    cmds = parse_tokens(tokens);
+    free_tokens(tokens);
+    return cmds;
+}

@@ -1,12 +1,12 @@
 #include "../../../include/minishell.h"
 
-t_token *new_token(const char *value, int quoted)
+t_token *new_token(const char *value, t_quote_type quoted)
 {
     t_token *token = malloc(sizeof(t_token));
     if (!token)
         return NULL;
     token->value = strdup(value);
-    token->quoted = quoted;
+    token->quote_type = quoted;
     token->type = get_token_type(value);
     token->next = NULL;
     token->prev = NULL;
