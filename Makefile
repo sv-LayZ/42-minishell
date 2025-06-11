@@ -8,7 +8,7 @@ src/parsing/parse/parse_utils.c \
 src/parsing/parse/parse_test.c \
 src/parsing/expand_variables.c \
 src/parsing/reader.c \
-src/main.c 
+src/main.c
 
 HEADER = include/minishell.h
 

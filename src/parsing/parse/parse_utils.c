@@ -3,8 +3,11 @@
 t_cmd *new_command(void)
 {
     t_cmd *cmd = malloc(sizeof(t_cmd));
+
     if (!cmd)
+    {
         return NULL;
+    }
     cmd->args = NULL;
     cmd->input_file = NULL;
     cmd->output_file = NULL;
@@ -55,7 +58,28 @@ void append_command(t_cmd **head, t_cmd *new_cmd)
     tmp->next = new_cmd;
 }
 
-void free_commands(t_cmd *cmd);
+void free_commands(t_cmd *cmd)
+{
+    t_cmd *tmp;
+
+    while (cmd)
+    {
+        tmp = cmd;
+        cmd = cmd->next;
+        if (tmp->args)
+        {
+            int i = -1;
+            while(i++, tmp->args[i])
+                free(tmp->args[i]);
+            free(tmp->args);
+        }
+        if (tmp->input_file)
+            free(tmp->input_file);
+        if (tmp->output_file)
+            free(tmp->output_file);
+        free(tmp);
+    }
+}
 
 int is_argument_type(t_token_type type)
 {

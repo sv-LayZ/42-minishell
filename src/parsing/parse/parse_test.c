@@ -22,3 +22,26 @@ void print_commands(t_cmd *cmd)
         cmd = cmd->next;
     }
 }
+
+// int main(int ac, char **av)
+// {
+//     if(ac == 2)
+//     {
+//         const char *input = av[1];
+//         t_token *tokens = line_lexer(input);
+//         free_tokens(tokens); // à implémenter si besoin
+
+//         printf("=== Tokens ===\n");
+//         t_token *tmp = tokens;
+//         while (tmp)
+//         {
+//             printf("Type: %d, Value: %s\n", tmp->type, tmp->value);
+//             tmp = tmp->next;
+//         }
+//         t_cmd *cmds = parse_tokens(tokens);
+//         printf("\n=== Parsed Commands ===\n");
+//         print_commands(cmds);
+//         free_commands(cmds); // à implémenter si besoin
+//     }
+//     return 0;
+// }

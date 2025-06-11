@@ -10,7 +10,7 @@ int main(int ac, char **av)
 	line = reader();
 	while (line)
 	{
-		
+		add_history(line);
 		free(line);
 		line = reader();
 	}

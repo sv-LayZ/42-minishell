@@ -6,7 +6,7 @@
 /*   By: Hadia <Hadia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 10:29:30 by mregnaut          #+#    #+#             */
-/*   Updated: 2025/06/09 16:21:00 by Hadia            ###   ########.fr       */
+/*   Updated: 2025/06/09 17:41:36 by Hadia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,5 +30,6 @@ char	*reader(void)
 	}
 	cmds = parsing(line); // Parse the input line into commands
 	print_commands(cmds);
+ free_commands(cmds);
 	return (line);
 }
