@@ -4,10 +4,12 @@ static void	*free_list(t_list *files, void *content, char *error)
 {
 	if (error)
 		perror(error);
-	if (files)
-		ft_lstclear(&files, free);
-	if (content)
-		free(content);
+	(void)files;
+	(void)content;
+	// if (files)
+	// 	ft_lstclear(&files, free);
+	// if (content)
+	// 	free(content);
 	return (NULL);
 }
 
@@ -50,13 +52,12 @@ static t_list	*get_files_in_dir(char *path)
 	dirp = opendir(path);
 	if (!dirp)
 	{
-		errsv = errno;
-		perror(strerror(errsv));
+		perror("opendir (get_files_in_dir)");
 		return (NULL);
 	}
 	files = list_files(dirp);
 	if (!files)
-		perror(ERROR_READING_DIR);
+		perror("list_files (get_files_in_dir)");
 	if (closedir(dirp) == -1)
 	{
 		errsv = errno;
@@ -64,6 +65,7 @@ static t_list	*get_files_in_dir(char *path)
 	}
 	return (files);
 }
+
 char	*get_executable_path(char *str)
 {
 	char	**paths;
@@ -78,10 +80,12 @@ char	*get_executable_path(char *str)
 	{
 		files = get_files_in_dir(paths[i]);
 		if (!files)
-			return (ft_free_tab(paths), NULL);
+		{
+			return (NULL); // TODO: free paths
+		}
 		while (files)
 		{
-			if (ft_strncmp(str, files->content, ft_strlen(files->content)) == 0)
+			if (ft_strcmp(files->content, str) == 0)
 			{
 				ft_lstclear(&files, free);
 				return (paths[i]);
@@ -91,34 +95,35 @@ char	*get_executable_path(char *str)
 		ft_lstclear(&files, free);
 		i++;
 	}
+	return (NULL);
 }
 
-int main(int argc, char **argv)
-{
-	// t_list *files = get_files_in_dir(argv[1]);
-	// if (files)
-	// {
-	// 	t_list *temp = files;
-	// 	while (temp)
-	// 	{
-	// 		__builtin_printf("%s\n", (char *)temp->content);
-	// 		temp = temp->next;
-	// 	}
-	// 	ft_lstclear(&files, free);
-	// }
-	// else
-	// {
-	// 	perror("Error");
-	// }
+// int main(int argc, char **argv)
+// {
+// 	// t_list *files = get_files_in_dir(argv[1]);
+// 	// if (files)
+// 	// {
+// 	// 	t_list *temp = files;
+// 	// 	while (temp)
+// 	// 	{
+// 	// 		__builtin_printf("%s\n", (char *)temp->content);
+// 	// 		temp = temp->next;
+// 	// 	}
+// 	// 	ft_lstclear(&files, free);
+// 	// }
+// 	// else
+// 	// {
+// 	// 	perror("Error");
+// 	// }
 
-	char *path = get_executable_path(argv[1]);
-	if (path)
-	{
-		__builtin_printf("Executable path: %s/%s\n", path, argv[1]);
-		free(path);
-	}
-	else
-	{
-		perror("Error");
-	}
-}
+// 	char *path = get_executable_path(argv[1]);
+// 	if (path)
+// 	{
+// 		__builtin_printf("Executable path: %s/%s\n", path, argv[1]);
+// 		free(path);
+// 	}
+// 	else
+// 	{
+// 		perror("Error");
+// 	}
+// }
