@@ -56,3 +56,17 @@ Execution shell parent, (gestion interface principale(prompt, lecture des comman
 - [ ] exit
 
 https://cdn.intra.42.fr/pdf/pdf/146856/en.subject.pdf
+
+## execution
+
+
+Trouver le path de la commande a executer
+ si la command n'est pas trouve "command not found"
+
+
+ >> > << < tcsetattr
+
+## historique des commands
+
+reproduire ~ cat .bash_history
+history > history,txt 

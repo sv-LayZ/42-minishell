@@ -2,7 +2,7 @@
 # define MINISHELL_H
 
 # include <stdio.h>
-#include <string.h>
+# include <fcntl.h>
 # include <stdlib.h>
 # include <fcntl.h>
 # include <dirent.h>
@@ -18,6 +18,8 @@
 # define ERROR_MEMORY "Memory allocation error"
 # define ERROR_READING_DIR "Error reading directory"
 
+
+// /* **********************************PARSING**************************************** */
 char	*reader(void);
 void print_commands(t_cmd *cmds);
 
