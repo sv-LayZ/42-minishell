@@ -3,21 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   reader.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mregnaut <mregnaut@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: Hadia <Hadia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 10:29:30 by mregnaut          #+#    #+#             */
-/*   Updated: 2025/05/27 15:49:36 by mregnaut         ###   ########.fr       */
+/*   Updated: 2025/06/11 15:32:20 by Hadia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-#include <readline/readline.h>
-#include <readline/history.h>
-#include <stdio.h>
 
 char	*reader(void)
 {
 	char	*line;
+	t_cmd	*cmds;
 
 	line = readline("Minishell> ");
 	if (!line)
@@ -30,6 +28,8 @@ char	*reader(void)
 		free(line);
 		return (NULL);
 	}
-	add_history(line); // TODO: add own history
+	cmds = parsing(line); // Parse the input line into commands
+	print_commands(cmds);
+ free_commands(cmds);
 	return (line);
 }
