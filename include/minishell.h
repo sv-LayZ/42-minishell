@@ -13,7 +13,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "../libft/libft.h"
-
+# include "signal.h"
 # define ENV_SEPARATOR ':'
 # define ENV_PATH "PATH"
 
@@ -39,8 +39,4 @@ typedef struct s_token
 
 // /* **********************************PARSING**************************************** */
 char	*reader(void);
-void handle_signals(void);
-void setup_sigint(void);
-void setup_sigquit(void);
-void handle_sigint(int sig);
 #endif
