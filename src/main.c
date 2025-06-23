@@ -7,7 +7,7 @@ int main(int ac, char **av)
 	(void)ac;
 	(void)av;
 
-	handle_signals(); // Set up signal handlers ok
+	handle_signals();  // Set up signal handlers ok
 	while (1) 
 	{
 		line = reader(); 
