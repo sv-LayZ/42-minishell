@@ -7,23 +7,18 @@
 # include <fcntl.h>
 # include <dirent.h>
 # include <errno.h>
+# include <unistd.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "../libft/libft.h"
 # include "parsing.h"
+# include "builtin.h"
 
 # define ENV_SEPARATOR ':'
 # define ENV_PATH "PATH"
 
 # define ERROR_MEMORY "Memory allocation error"
 # define ERROR_READING_DIR "Error reading directory"
-
-# define BUILTIN_STR "echo", 		"cd",		NULL
-# define BUILTIN_FUNC builtin_echo,	builtin_echo,	NULL
-
-# define BUILTIN_STR "echo", 		"cd",		NULL
-# define BUILTIN_FUNC builtin_echo,	builtin_echo,	NULL
-
 
 // /* **********************************PARSING**************************************** */
 char	*reader(void);
@@ -107,6 +102,5 @@ void print_commands(t_cmd *cmds);
 // t_cmd *new_command(void);
 // t_cmd *parse_tokens(t_token *tokens);
 // t_token *line_lexer(const char *line);
-int	builtin_echo(char **args);
 
 #endif

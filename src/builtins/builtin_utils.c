@@ -1,37 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin_echo.c                                     :+:      :+:    :+:   */
+/*   builtin_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mregnaut <mregnaut@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/03 22:20:59 by mregnaut          #+#    #+#             */
-/*   Updated: 2025/06/23 21:45:34 by mregnaut         ###   ########.fr       */
+/*   Created: 2025/06/23 21:35:47 by mregnaut          #+#    #+#             */
+/*   Updated: 2025/06/23 22:28:23 by mregnaut         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/builtin.h"
 
-int	builtin_echo(char **args)
-{
-	int	i;
-	int	newline;
 
-	i = 1;
-	newline = 1;
-	if (args[1] && ft_strcmp(args[1], "-n") == 0)
+int	is_builtin(char *cmd)
+{
+    static char	*builtin_str[] = {BUILTIN_CMDS};
+	int	i;
+
+	if (!cmd)
+		return (0);
+	
+	i = 0;
+	while (builtin_str[i])
 	{
-		newline = 0;
-		i = 2;
-	}
-	while (args[i])
-	{
-		printf("%s", args[i]);
-		if (args[i + 1])
-			printf(" ");
+		if (ft_strcmp(cmd, builtin_str[i]) == 0)
+			return (i);
 		i++;
 	}
-	if (newline)
-		printf("\n");
-	return (0);
+	return (-1);
 }
+
+int	execute_builtin(int index, char **args)
+{
+    static int	(*builtin_func[])(char **) = {BUILTIN_FUNCS};
+
+	if (index == -1)
+		return (-1);
+	return (builtin_func[index](args));
+} 

@@ -1,37 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin_echo.c                                     :+:      :+:    :+:   */
+/*   builtin_cd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mregnaut <mregnaut@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/03 22:20:59 by mregnaut          #+#    #+#             */
-/*   Updated: 2025/06/23 21:45:34 by mregnaut         ###   ########.fr       */
+/*   Created: 2025/06/23 21:35:47 by mregnaut          #+#    #+#             */
+/*   Updated: 2025/06/23 21:42:02 by mregnaut         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/builtin.h"
 
-int	builtin_echo(char **args)
+int	builtin_cd(char **args)
 {
-	int	i;
-	int	newline;
+	char	*path;
 
-	i = 1;
-	newline = 1;
-	if (args[1] && ft_strcmp(args[1], "-n") == 0)
+	if (!args[1])
 	{
-		newline = 0;
-		i = 2;
+		path = getenv("HOME");
+		if (!path)
+		{
+			printf("cd: HOME not set\n");
+			return (1);
+		}
 	}
-	while (args[i])
+	else if (args[2])
 	{
-		printf("%s", args[i]);
-		if (args[i + 1])
-			printf(" ");
-		i++;
+		printf("cd: too many arguments\n");
+		return (1);
 	}
-	if (newline)
-		printf("\n");
+	else
+		path = args[1];
+	
+	if (chdir(path) != 0)
+	{
+		perror("cd");
+		return (1);
+	}
 	return (0);
-}
+} 

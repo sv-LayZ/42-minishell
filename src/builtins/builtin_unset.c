@@ -1,37 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin_echo.c                                     :+:      :+:    :+:   */
+/*   builtin_unset.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mregnaut <mregnaut@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/03 22:20:59 by mregnaut          #+#    #+#             */
-/*   Updated: 2025/06/23 21:45:34 by mregnaut         ###   ########.fr       */
+/*   Created: 2025/06/23 21:35:47 by mregnaut          #+#    #+#             */
+/*   Updated: 2025/06/23 21:42:17 by mregnaut         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/builtin.h"
 
-int	builtin_echo(char **args)
+int	builtin_unset(char **args)
 {
 	int	i;
-	int	newline;
+	int	ret;
 
+	if (!args[1])
+		return (0);
+	
+	ret = 0;
 	i = 1;
-	newline = 1;
-	if (args[1] && ft_strcmp(args[1], "-n") == 0)
-	{
-		newline = 0;
-		i = 2;
-	}
 	while (args[i])
 	{
-		printf("%s", args[i]);
-		if (args[i + 1])
-			printf(" ");
+		if (unsetenv(args[i]) != 0)
+		{
+			perror("unset");
+			ret = 1;
+		}
 		i++;
 	}
-	if (newline)
-		printf("\n");
-	return (0);
-}
+	return (ret);
+} 
