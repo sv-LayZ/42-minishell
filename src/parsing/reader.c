@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   reader.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Hadia <Hadia@student.42.fr>                +#+  +:+       +#+        */
+/*   By: hadia <hadia@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 10:29:30 by mregnaut          #+#    #+#             */
-/*   Updated: 2025/06/18 14:28:30 by Hadia            ###   ########.fr       */
+/*   Updated: 2025/06/23 21:28:58 by hadia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,13 @@ char	*reader(void)
 	//t_cmd	*cmds;
 
 	line = readline("Minishell> ");
+	if (line == NULL) //for ctrl-d
+		exit(0);
 	if (!line)
 	{
 		perror("Error reading line");
-		// return (NULL);
-		exit(0);
+		 return (NULL);
+		// exit(0);
 	}
 	if (ft_strlen(line) == 0)
 	{
