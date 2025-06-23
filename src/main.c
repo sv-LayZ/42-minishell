@@ -6,7 +6,6 @@ int main(int ac, char **av)
 	
 	(void)ac;
 	(void)av;
-
 	handle_signals();  // Set up signal handlers ok
 	while (1) 
 	{
@@ -16,5 +15,5 @@ int main(int ac, char **av)
 		// __builtin_printf("line: $%s$\n", get_executable_path("echo"));
 		//__builtin_printf("executable: %s\n", get_executable_path(line));
 		free(line);
-	}
+  }
 }
