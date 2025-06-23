@@ -8,6 +8,8 @@
 # include <errno.h>
 # include <string.h>
 # include <fcntl.h>
+# include <unistd.h>
+# include <signal.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "../libft/libft.h"
@@ -17,6 +19,8 @@
 
 # define ERROR_MEMORY "Memory allocation error"
 # define ERROR_READING_DIR "Error reading directory"
+
+# define _POSIX_C_SOURCE 200809L
 
 typedef enum e_token_type
 {
@@ -35,6 +39,8 @@ typedef struct s_token
 
 // /* **********************************PARSING**************************************** */
 char	*reader(void);
-char	*get_executable_path(char *str);
-
+void handle_signals(void);
+void setup_sigint(void);
+void setup_sigquit(void);
+void handle_sigint(int sig);
 #endif

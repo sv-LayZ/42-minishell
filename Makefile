@@ -2,7 +2,7 @@ C = cc
 CFLAGS = -Wall -Wextra -Werror -Iinclude -g
 SRC = src/main.c \
 	src/parsing/reader.c \
-	src/parsing/executable.c \
+	src/signals/signals.c 
 
 
 HEADER = include/minishell.h
