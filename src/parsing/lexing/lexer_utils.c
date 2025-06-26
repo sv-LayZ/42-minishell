@@ -52,6 +52,27 @@ int operator_token_length(const char *str)
     return 1;
 }
 
+// Supprime les guillemets simples ou doubles entourant une chaîne, si présents
+char *remove_quotes(const char *str)
+{
+    size_t len;
+    char *res;
+
+    if (!str)
+        return NULL;
+    len = strlen(str);
+    if (len >= 2 && ((str[0] == '"' && str[len-1] == '"') || (str[0] == '\'' && str[len-1] == '\'')))
+    {
+        res = malloc(len - 1); // len - 2 (quotes) + 1 (null)
+        if (!res)
+            return NULL;
+        strncpy(res, str + 1, len - 2);
+        res[len - 2] = '\0';
+        return res;
+    }
+    return strdup(str);
+}
+
 // int main()
 // {
 //     const char *input = "echo \"hello $USER\" | grep 'abc $USER' > output.txt";
