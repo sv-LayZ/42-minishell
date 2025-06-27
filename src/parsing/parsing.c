@@ -34,6 +34,12 @@ t_cmd *parse_tokens(t_token *tokens)
                 if (!tokens->value)
                     return NULL; // erreur d'expansion
             }
+            if(tokens->quote_type != NO_QUOTE)
+            {
+                char *removed = remove_quotes(tokens->value);
+                free(tokens->value);
+                tokens->value = removed;
+            }
             if (!add_arg(current, tokens->value))
                 return NULL;
         }
