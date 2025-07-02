@@ -1,19 +1,23 @@
 #include "../include/minishell.h"
 
-int main(int ac, char **av)
+int main(void)
 {
 	char	*line;
-	
+	t_cmd	*cmds;
+
 	(void)ac;
 	(void)av;
 	handle_signals();  // Set up signal handlers ok
 	while (1) 
 	{
-		line = reader(); 
-		// TODO: action here
-		// __builtin_printf("line: $%s$\n", line);
-		// __builtin_printf("line: $%s$\n", get_executable_path("echo"));
-		//__builtin_printf("executable: %s\n", get_executable_path(line));
+		line = reader();
+
+		cmds = parsing(line);
+		print_commands(cmds); // DEBUG
+
+		execute_builtin(is_builtin(cmds->args[0]), cmds->args); // DEBUG
+
+		free_commands(cmds);
 		free(line);
-  }
+	}
 }

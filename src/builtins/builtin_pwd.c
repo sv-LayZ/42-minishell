@@ -1,34 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   reader.c                                           :+:      :+:    :+:   */
+/*   builtin_pwd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mregnaut <mregnaut@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/14 10:29:30 by mregnaut          #+#    #+#             */
-/*   Updated: 2025/06/23 22:20:56 by mregnaut         ###   ########.fr       */
+/*   Created: 2025/06/23 21:35:47 by mregnaut          #+#    #+#             */
+/*   Updated: 2025/06/23 21:42:06 by mregnaut         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+#include "../../include/builtin.h"
 
-char	*reader(void)
+int	builtin_pwd(char **args)
 {
-	char	*line;
+	char	*cwd;
 
-	line = readline("Minishell> ");
-	if (line == NULL) //for ctrl-d
-		exit(0);
-	if (!line)
+	(void)args;
+	cwd = getcwd(NULL, 0);
+	if (!cwd)
 	{
-		perror("Error reading line");
-		 return (NULL);
-		// exit(0);
+		perror("pwd");
+		return (1);
 	}
-	if (ft_strlen(line) == 0)
-	{
-		free(line);
-		return (NULL);
-	}
-	return (line);
-}
+	printf("%s\n", cwd);
+	free(cwd);
+	return (0);
+} 

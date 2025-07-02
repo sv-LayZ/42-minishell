@@ -1,34 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   reader.c                                           :+:      :+:    :+:   */
+/*   builtin_unset.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mregnaut <mregnaut@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/14 10:29:30 by mregnaut          #+#    #+#             */
-/*   Updated: 2025/06/23 22:20:56 by mregnaut         ###   ########.fr       */
+/*   Created: 2025/06/23 21:35:47 by mregnaut          #+#    #+#             */
+/*   Updated: 2025/06/23 21:42:17 by mregnaut         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+#include "../../include/builtin.h"
 
-char	*reader(void)
+int	builtin_unset(char **args)
 {
-	char	*line;
+	int	i;
+	int	ret;
 
-	line = readline("Minishell> ");
-	if (line == NULL) //for ctrl-d
-		exit(0);
-	if (!line)
+	if (!args[1])
+		return (0);
+	
+	ret = 0;
+	i = 1;
+	while (args[i])
 	{
-		perror("Error reading line");
-		 return (NULL);
-		// exit(0);
+		if (unsetenv(args[i]) != 0)
+		{
+			perror("unset");
+			ret = 1;
+		}
+		i++;
 	}
-	if (ft_strlen(line) == 0)
-	{
-		free(line);
-		return (NULL);
-	}
-	return (line);
-}
+	return (ret);
+} 

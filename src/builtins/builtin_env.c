@@ -1,34 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   reader.c                                           :+:      :+:    :+:   */
+/*   builtin_env.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mregnaut <mregnaut@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/14 10:29:30 by mregnaut          #+#    #+#             */
-/*   Updated: 2025/06/23 22:20:56 by mregnaut         ###   ########.fr       */
+/*   Created: 2025/06/23 21:35:47 by mregnaut          #+#    #+#             */
+/*   Updated: 2025/06/23 21:42:32 by mregnaut         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+#include "../../include/builtin.h"
 
-char	*reader(void)
+extern char **environ;
+
+int	builtin_env(char **args)
 {
-	char	*line;
+	int	i;
 
-	line = readline("Minishell> ");
-	if (line == NULL) //for ctrl-d
-		exit(0);
-	if (!line)
+	(void)args;
+	i = 0;
+	while (environ[i])
 	{
-		perror("Error reading line");
-		 return (NULL);
-		// exit(0);
+		printf("%s\n", environ[i]);
+		i++;
 	}
-	if (ft_strlen(line) == 0)
-	{
-		free(line);
-		return (NULL);
-	}
-	return (line);
-}
+	return (0);
+} 

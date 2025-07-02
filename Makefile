@@ -1,15 +1,23 @@
 C = cc
 CFLAGS = -Wall -Wextra -Werror -Iinclude
 SRC = src/parsing/lexing/lexer.c \
-src/parsing/lexing/lexer_utils.c \
-src/parsing/lexing/detect_type.c \
-src/parsing/parsing.c \
-src/parsing/parse/parse_utils.c \
-src/parsing/parse/parse_test.c \
-src/parsing/expand_variables.c \
-src/parsing/reader.c \
-src/main.c
-
+	src/parsing/lexing/lexer_utils.c \
+	src/parsing/lexing/detect_type.c \
+	src/parsing/parsing.c \
+	src/parsing/parse/parse_utils.c \
+	src/parsing/parse/parse_test.c \
+	src/parsing/expand_variables.c \
+	src/parsing/reader.c \
+	src/main.c \
+	src/builtins/builtin_utils.c \
+	src/builtins/builtin_echo.c \
+	src/builtins/builtin_cd.c \
+	src/builtins/builtin_pwd.c \
+	src/builtins/builtin_export.c \
+	src/builtins/builtin_unset.c \
+	src/builtins/builtin_env.c \
+	src/builtins/builtin_exit.c
+	
 HEADER = include/minishell.h
 
 OBJ = $(SRC:.c=.o)
