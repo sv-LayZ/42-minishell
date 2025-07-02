@@ -19,7 +19,7 @@ int	is_builtin(char *cmd)
 	int	i;
 
 	if (!cmd)
-		return (0);
+		return (-1);
 	
 	i = 0;
 	while (builtin_str[i])
