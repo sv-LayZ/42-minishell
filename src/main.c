@@ -1,16 +1,15 @@
-
-#include "minishell.h"
+#include "../include/minishell.h"
 
 int main(void)
 {
 	char	*line;
 	t_cmd	*cmds;
 
-	line = reader();
-	while (line)
+	(void)ac;
+	(void)av;
+	handle_signals();  // Set up signal handlers ok
+	while (1) 
 	{
-		add_history(line);
-		free(line);
 		line = reader();
 
 		cmds = parsing(line);

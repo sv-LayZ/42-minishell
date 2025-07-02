@@ -57,7 +57,7 @@ char *expand_variables(const char *line);
 
 // /* **********************************UTILS**************************************** */
 void free_commands(t_cmd *cmd);
-
+char *remove_quotes(const char *str);
 // /* **********************************LEXING**************************************** */
 
 t_token_type get_token_type(const char *value);

@@ -17,10 +17,13 @@ char	*reader(void)
 	char	*line;
 
 	line = readline("Minishell> ");
+	if (line == NULL) //for ctrl-d
+		exit(0);
 	if (!line)
 	{
 		perror("Error reading line");
-		return (NULL);
+		 return (NULL);
+		// exit(0);
 	}
 	if (ft_strlen(line) == 0)
 	{

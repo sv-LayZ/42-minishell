@@ -7,10 +7,14 @@
 # include <fcntl.h>
 # include <dirent.h>
 # include <errno.h>
+# include <string.h>
+# include <fcntl.h>
 # include <unistd.h>
+# include <signal.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "../libft/libft.h"
+# include "signal.h"
 # include "parsing.h"
 # include "builtin.h"
 
@@ -19,6 +23,8 @@
 
 # define ERROR_MEMORY "Memory allocation error"
 # define ERROR_READING_DIR "Error reading directory"
+
+# define _POSIX_C_SOURCE 200809L
 
 // /* **********************************PARSING**************************************** */
 char	*reader(void);
