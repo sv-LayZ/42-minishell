@@ -18,6 +18,6 @@ int main(void)
 		execute_builtin(is_builtin(cmds->args[0]), cmds->args); // DEBUG
 
 		free_commands(cmds);
+		free(line);
 	}
-	free(line);
 }
