@@ -1,4 +1,4 @@
-#include "../../include/minishell.h" // <signal.h>
+#include "minishell.h" // <signal.h>
 volatile sig_atomic_t g_interrupted = 0;
 
 //ctrl-c : nouvelle ligne ok

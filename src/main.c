@@ -5,8 +5,6 @@ int main(void)
 	char	*line;
 	t_cmd	*cmds;
 
-	(void)ac;
-	(void)av;
 	handle_signals();  // Set up signal handlers ok
 	while (1) 
 	{
