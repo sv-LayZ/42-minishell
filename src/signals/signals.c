@@ -6,12 +6,11 @@ void handle_sigint(int sig)
 {
     (void)sig;
     
-    // write(1, "\n", 1);
+    ft_putchar_fd('\n', 1);// Print a newline to the terminal
     rl_on_new_line();
     rl_replace_line("", 0); 
     rl_redisplay();
     g_interrupted = 1; // Set the flag to indicate interruption
-    printf("CTRL+C Pressed"); // Print a newline for better readability
 }
 //selon le signal ok
 void setup_sigint(void)
