@@ -3,7 +3,7 @@
 
 static void skip_whitespace(const char *input, int *i)
 {
-    while (isspace(input[*i]))
+    while (ft_isspace(input[*i]))
         (*i)++;
 }
 
@@ -39,7 +39,7 @@ static char *extract_operator_token(const char *input, int *i)
 static char *extract_word_token(const char *input, int *i)
 {
     int start = *i;
-    while (input[*i] && !isspace(input[*i]) && !is_operator_char(input[*i]))
+    while (input[*i] && !ft_isspace(input[*i]) && !is_operator_char(input[*i]))
         (*i)++;
     int len = *i - start;
     char *token = malloc(len + 1);

@@ -8,6 +8,7 @@ SRC = src/parsing/lexing/lexer.c \
 	src/parsing/parse/parse_test.c \
 	src/parsing/expand_variables.c \
 	src/parsing/reader.c \
+	src/signals/signals.c \
 	src/main.c \
 	src/builtins/builtin_utils.c \
 	src/builtins/builtin_echo.c \

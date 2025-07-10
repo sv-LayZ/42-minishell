@@ -14,7 +14,6 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "../libft/libft.h"
-# include "signal.h"
 # include "parsing.h"
 # include "builtin.h"
 
@@ -26,6 +25,11 @@
 
 # define _POSIX_C_SOURCE 200809L
 
+// /* **********************************SIGNALS**************************************** */
+void setup_sigint(void);
+void setup_sigquit(void);
+void handle_sigint(int sig);
+void handle_signals(void);
 // /* **********************************PARSING**************************************** */
 char	*reader(void);
 void print_commands(t_cmd *cmds);
