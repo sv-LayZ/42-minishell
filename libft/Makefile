@@ -6,7 +6,7 @@
 #    By: Hadia <Hadia@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/04 15:56:12 by mregnaut          #+#    #+#              #
-#    Updated: 2025/06/11 15:36:23 by Hadia            ###   ########.fr        #
+#    Updated: 2025/07/10 19:23:46 by Hadia            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,7 @@ FILES = ft_bzero.c \
 		ft_isalnum.c \
 		ft_isalpha.c \
 		ft_isascii.c \
+		ft_isspace.c \
 		ft_isdigit.c \
 		ft_isprint.c \
 		ft_memchr.c \

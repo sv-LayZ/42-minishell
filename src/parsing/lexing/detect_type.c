@@ -3,7 +3,7 @@
 
 static void skip_whitespace(const char *input, int *i)
 {
-    while (isspace(input[*i]))
+    while (ft_isspace(input[*i]))
         (*i)++;
 }
 

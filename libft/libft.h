@@ -6,7 +6,7 @@
 /*   By: Hadia <Hadia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 15:56:18 by mregnaut          #+#    #+#             */
-/*   Updated: 2025/06/11 15:36:09 by Hadia            ###   ########.fr       */
+/*   Updated: 2025/07/10 19:23:44 by Hadia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ typedef struct s_list
 int					ft_isalpha(int c);
 int					ft_isalnum(int c);
 int					ft_isascii(int c);
+int					ft_isspace(int c);
 int					ft_isdigit(int c);
 int					ft_isprint(int c);
 int					ft_tolower(int c);
