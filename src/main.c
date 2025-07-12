@@ -7,11 +7,12 @@ int main(int ac, char **av)
 	char	*line;
 	t_cmd	*cmds;
 
+	handle_signals();  // Set up signal handlers ok
 	while (1) 
 	{
-		handle_signals();  // Set up signal handlers ok
 		line = reader();
 
+		add_history(line); // Add the line to history ok
 		cmds = parsing(line);
 		print_commands(cmds); // DEBUG
 
