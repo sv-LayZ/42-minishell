@@ -1,5 +1,8 @@
 #include "../include/minishell.h"
 
+// Global variable for exit status ($?)
+int g_exit_status = 0;
+
 int main(int ac, char **av)
 {
 	(void) ac;
@@ -7,18 +10,24 @@ int main(int ac, char **av)
 	char	*line;
 	t_cmd	*cmds;
 
-	handle_signals();  // Set up signal handlers ok
+	handle_signals();  // Set up signal handlers
 	while (1) 
 	{
 		line = reader();
+		if (!line)  // Handle empty input (Ctrl+D handled in reader())
+			continue;
 
-		add_history(line); // Add the line to history ok
+		if (ft_strlen(line) > 0)
+			add_history(line); // Add non-empty lines to history
+		
 		cmds = parsing(line);
-		print_commands(cmds); // DEBUG
-
-		execute_builtin(is_builtin(cmds->args[0]), cmds->args); // DEBUG
+		if (cmds && cmds->args && cmds->args[0])
+		{
+			g_exit_status = execute_command(cmds);
+		}
 
 		free_commands(cmds);
 		free(line);
 	}
+	return (0);
 }

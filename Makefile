@@ -1,5 +1,13 @@
 C = cc
 CFLAGS = -Wall -Wextra -Werror -Iinclude
+
+UNAME_S := $(shell uname -s)
+
+ifeq ($(UNAME_S),Darwin) #macOS
+	CFLAGS += -I/opt/homebrew/opt/readline/include
+	LDFLAGS = -L/opt/homebrew/opt/readline/lib
+endif
+
 SRC = src/parsing/lexing/lexer.c \
 	src/parsing/lexing/lexer_utils.c \
 	src/parsing/lexing/detect_type.c \
@@ -9,6 +17,7 @@ SRC = src/parsing/lexing/lexer.c \
 	src/parsing/expand_variables.c \
 	src/parsing/reader.c \
 	src/signals/signals.c \
+	src/execution.c \
 	src/main.c \
 	src/builtins/builtin_utils.c \
 	src/builtins/builtin_echo.c \
@@ -30,7 +39,7 @@ LIB_DIR = libft
 LIBFT = $(LIB_DIR)/libft.a
 
 $(NAME): $(OBJ) $(LIBFT)
-	$(CC) $(CFLAGS) $(OBJ) -L$(LIB_DIR) -lft -lreadline -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJ) -L$(LIB_DIR) -lft $(LDFLAGS) -lreadline -o $(NAME)
 
 $(LIBFT): force
 	$(MAKE) -C $(LIB_DIR) bonus

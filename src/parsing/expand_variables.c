@@ -10,21 +10,65 @@ char *expand_variables(const char *line)
     size_t i = 0, j = 0;
     while (line[i])
     {
-        if (line[i] == '$' && line[i + 1] && (ft_isalnum(line[i + 1]) || line[i + 1] == '_'))
+        if (line[i] == '$' && line[i + 1])
         {
-            i++;
-            char var_name[256];
-            int k = 0;
-
-            while (line[i] && (ft_isalnum(line[i]) || line[i] == '_') && k < 255)
-                var_name[k++] = line[i++];
-            var_name[k] = '\0';
-
-            char *value = getenv(var_name);
-            if (value)
+            if (line[i + 1] == '?')
             {
-                size_t val_len = strlen(value);
-                while (j + val_len >= result_size)
+                i += 2; // Skip $?
+                char *exit_status_str = ft_itoa(g_exit_status);
+                if (exit_status_str)
+                {
+                    size_t val_len = strlen(exit_status_str);
+                    while (j + val_len >= result_size)
+                    {
+                        result_size *= 2;
+                        char *new_result = realloc(result, result_size);
+                        if (!new_result)
+                        {
+                            free(result);
+                            free(exit_status_str);
+                            return NULL;
+                        }
+                        result = new_result;
+                    }
+                    strcpy(&result[j], exit_status_str);
+                    j += val_len;
+                    free(exit_status_str);
+                }
+            }
+            else if (ft_isalnum(line[i + 1]) || line[i + 1] == '_')
+            {
+                i++;
+                char var_name[256];
+                int k = 0;
+
+                while (line[i] && (ft_isalnum(line[i]) || line[i] == '_') && k < 255)
+                    var_name[k++] = line[i++];
+                var_name[k] = '\0';
+
+                char *value = getenv(var_name);
+                if (value)
+                {
+                    size_t val_len = strlen(value);
+                    while (j + val_len >= result_size)
+                    {
+                        result_size *= 2;
+                        char *new_result = realloc(result, result_size);
+                        if (!new_result)
+                        {
+                            free(result);
+                            return NULL;
+                        }
+                        result = new_result;
+                    }
+                    strcpy(&result[j], value);
+                    j += val_len;
+                }
+            }
+            else
+            {
+                // Handle $ followed by other characters - treat as literal
+                if (j + 1 >= result_size)
                 {
                     result_size *= 2;
                     char *new_result = realloc(result, result_size);
@@ -35,8 +79,7 @@ char *expand_variables(const char *line)
                     }
                     result = new_result;
                 }
-                strcpy(&result[j], value);
-                j += val_len;
+                result[j++] = line[i++];
             }
         }
         else
