@@ -34,6 +34,12 @@ void handle_signals(void);
 char	*reader(void);
 void print_commands(t_cmd *cmds);
 
+// /* **********************************EXECUTION************************************ */
+int	execute_command(t_cmd *cmd);
+
+// Global variable for exit status ($?)
+extern int g_exit_status;
+
 // typedef struct s_cmd
 // {
 //     char *name;

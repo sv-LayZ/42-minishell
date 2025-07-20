@@ -26,7 +26,8 @@ t_cmd *parse_tokens(t_token *tokens)
         }
         else if (is_argument_type(tokens->type))
         {
-            if(tokens->quote_type == DOUBLE_QUOTE)
+            // Expand variables for unquoted tokens and double-quoted tokens
+            if(tokens->quote_type != SINGLE_QUOTE)
             {
                 char *expanded = expand_variables(tokens->value);
                 free(tokens->value);
@@ -34,6 +35,7 @@ t_cmd *parse_tokens(t_token *tokens)
                 if (!tokens->value)
                     return NULL; // erreur d'expansion
             }
+            // Remove quotes if present
             if(tokens->quote_type != NO_QUOTE)
             {
                 char *removed = remove_quotes(tokens->value);
