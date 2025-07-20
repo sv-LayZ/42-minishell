@@ -28,19 +28,16 @@ static char	*find_executable_in_path(char *cmd)
 		if (full_path && access(full_path, X_OK) == 0)
 		{
 			// Free paths array
-			while (paths[i])
-				free(paths[i++]);
-			free(paths);
+			free_paths_array(paths);
+			return (full_path);
 			return (full_path);
 		}
 		free(full_path);
 		i++;
 	}
 	// Free paths array
-	i = 0;
-	while (paths[i])
-		free(paths[i++]);
-	free(paths);
+	free_paths_array(paths);
+	return (NULL);
 	return (NULL);
 }
 
