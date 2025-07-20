@@ -11,7 +11,10 @@ static char	*find_executable_in_path(char *cmd)
 
 	if (!cmd || ft_strchr(cmd, '/'))
 		return (ft_strdup(cmd));
-	paths = ft_split(getenv("PATH"), ':');
+	char *path_env = getenv("PATH");
+	if (!path_env)
+		return (NULL);
+	paths = ft_split(path_env, ':');
 	if (!paths)
 		return (NULL);
 	i = 0;
