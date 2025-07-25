@@ -31,7 +31,7 @@ SRC = src/parsing/lexing/lexer.c \
 HEADER = include/minishell.h
 
 OBJ = $(SRC:.c=.o)
-NAME = minishell
+NAME = test_shell
 
 all: $(NAME)
 

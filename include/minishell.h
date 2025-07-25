@@ -13,8 +13,6 @@
 # include <signal.h>
 # include <readline/readline.h>
 # include <readline/history.h>
-# include <sys/types.h>
-# include <sys/wait.h>
 # include "../libft/libft.h"
 # include "parsing.h"
 # include "builtin.h"
