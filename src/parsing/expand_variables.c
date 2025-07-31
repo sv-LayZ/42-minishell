@@ -1,109 +1,39 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   expand_variables.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: Hadia <Hadia@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/01/01 00:00:00 by student           #+#    #+#             */
+/*   Updated: 2025/07/31 23:23:09 by Hadia            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../include/minishell.h"
 
-char *expand_variables(const char *line)
+char	*expand_variables(const char *line)
 {
-    size_t result_size = 1024;
-    char *result = malloc(result_size);
-    if (!result)
-        return NULL;
+	size_t			result_size;
+	char			*result;
+	size_t			i;
+	size_t			j;
+	t_expand_data	data;
 
-    size_t i = 0, j = 0;
-    while (line[i])
-    {
-        if (line[i] == '$' && line[i + 1])
-        {
-            if (line[i + 1] == '?')
-            {
-                i += 2; // Skip $?
-                char *exit_status_str = ft_itoa(g_exit_status);
-                if (exit_status_str)
-                {
-                    size_t val_len = strlen(exit_status_str);
-                    while (j + val_len >= result_size)
-                    {
-                        result_size *= 2;
-                        char *new_result = realloc(result, result_size);
-                        if (!new_result)
-                        {
-                            free(result);
-                            free(exit_status_str);
-                            return NULL;
-                        }
-                        result = new_result;
-                    }
-                    strcpy(&result[j], exit_status_str);
-                    j += val_len;
-                    free(exit_status_str);
-                }
-            }
-            else if (ft_isalnum(line[i + 1]) || line[i + 1] == '_')
-            {
-                i++;
-                char var_name[256];
-                int k = 0;
-
-                while (line[i] && (ft_isalnum(line[i]) || line[i] == '_') && k < 255)
-                    var_name[k++] = line[i++];
-                var_name[k] = '\0';
-
-                char *value = getenv(var_name);
-                if (value)
-                {
-                    size_t val_len = strlen(value);
-                    while (j + val_len >= result_size)
-                    {
-                        result_size *= 2;
-                        char *new_result = realloc(result, result_size);
-                        if (!new_result)
-                        {
-                            free(result);
-                            return NULL;
-                        }
-                        result = new_result;
-                    }
-                    strcpy(&result[j], value);
-                    j += val_len;
-                }
-            }
-            else
-            {
-                // Handle $ followed by other characters - treat as literal
-                if (j + 1 >= result_size)
-                {
-                    result_size *= 2;
-                    char *new_result = realloc(result, result_size);
-                    if (!new_result)
-                    {
-                        free(result);
-                        return NULL;
-                    }
-                    result = new_result;
-                }
-                result[j++] = line[i++];
-            }
-        }
-        else
-        {
-            // Expand buffer if needed
-            if (j + 1 >= result_size)
-            {
-                result_size *= 2;
-                char *new_result = realloc(result, result_size);
-                if (!new_result)
-                {
-                    free(result);
-                    return NULL;
-                }
-                result = new_result;
-            }
-            result[j++] = line[i++];
-        }
-    }
-
-    result[j] = '\0';
-    return result;
+	result_size = 1024;
+	result = malloc(result_size);
+	if (!result)
+		return (NULL);
+	i = 0;
+	j = 0;
+	data.result = &result;
+	data.j = &j;
+	data.result_size = &result_size;
+	while (line[i])
+	{
+		if (!handle_dollar_sign(line, &i, &data))
+			return (NULL);
+	}
+	result[j] = '\0';
+	return (result);
 }
-
-
-// VAR="Hello world" ./parse "\"$VAR"\"
-// Word 1: "Hello world"

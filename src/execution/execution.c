@@ -1,41 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: Hadia <Hadia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/31 23:00:58 by Hadia             #+#    #+#             */
-/*   Updated: 2025/08/01 01:30:24 by Hadia            ###   ########.fr       */
+/*   Created: 2025/07/31 21:50:01 by Hadia             #+#    #+#             */
+/*   Updated: 2025/07/31 22:34:31 by Hadia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	g_exit_status = 0;
-
-int	main(int ac, char **av)
+int	execute_command(t_cmd *cmd)
 {
-	char	*line;
-	t_cmd	*cmds;
+	int	builtin_index;
+	int	exit_code;
 
-	(void)ac;
-	(void)av;
-	handle_signals();
-	while (1)
-	{
-		line = reader();
-		if (!line)
-			continue ;
-		if (ft_strlen(line) > 0)
-			add_history(line);
-		cmds = parsing(line);
-		if (cmds && cmds->args && cmds->args[0])
-		{
-			g_exit_status = execute_command(cmds);
-		}
-		free_commands(cmds);
-		free(line);
-	}
-	return (0);
+	if (!cmd || !cmd->args || !cmd->args[0])
+		return (0);
+	if (cmd->input_file || cmd->output_file)
+		return (execute_with_redirections(cmd));
+	builtin_index = is_builtin(cmd->args[0]);
+	if (builtin_index != -1)
+		exit_code = execute_builtin(builtin_index, cmd->args);
+	else
+		exit_code = execute_external_command(cmd->args);
+	return (exit_code);
 }

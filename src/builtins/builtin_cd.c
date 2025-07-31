@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_cd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mregnaut <mregnaut@student.42.fr>          +#+  +:+       +#+        */
+/*   By: Hadia <Hadia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 21:35:47 by mregnaut          #+#    #+#             */
-/*   Updated: 2025/06/23 21:42:02 by mregnaut         ###   ########.fr       */
+/*   Updated: 2025/07/31 21:33:15 by Hadia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,10 @@ int	builtin_cd(char **args)
 	}
 	else
 		path = args[1];
-	
 	if (chdir(path) != 0)
 	{
 		perror("cd");
 		return (1);
 	}
 	return (0);
-} 
+}

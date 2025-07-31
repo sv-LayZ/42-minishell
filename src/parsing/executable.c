@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   executable.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: Hadia <Hadia@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/01/01 00:00:00 by student           #+#    #+#             */
+/*   Updated: 2025/07/31 22:57:49 by Hadia            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../include/minishell.h"
 
 static void	*free_list(t_list *files, void *content, char *error)
@@ -6,10 +18,6 @@ static void	*free_list(t_list *files, void *content, char *error)
 		perror(error);
 	(void)files;
 	(void)content;
-	// if (files)
-	// 	ft_lstclear(&files, free);
-	// if (content)
-	// 	free(content);
 	return (NULL);
 }
 
@@ -17,7 +25,7 @@ static t_list	*list_files(DIR *dirp)
 {
 	struct dirent	*dir;
 	char			*file;
-	int 			errsv;
+	int				errsv;
 	t_list			*files;
 	t_list			*temp;
 
@@ -41,7 +49,7 @@ static t_list	*list_files(DIR *dirp)
 	return (files);
 }
 
-static t_list	*get_files_in_dir(char *path)
+t_list	*get_files_in_dir(char *path)
 {
 	DIR				*dirp;
 	t_list			*files;
@@ -69,61 +77,13 @@ static t_list	*get_files_in_dir(char *path)
 char	*get_executable_path(char *str)
 {
 	char	**paths;
-	t_list	*files;
-	int		i;
-	
+	char	*result;
+
 	paths = ft_split(getenv(ENV_PATH), ENV_SEPARATOR);
 	if (!paths)
 		return (NULL);
-	i = 0;
-	while (paths[i])
-	{
-		files = get_files_in_dir(paths[i]);
-		if (!files)
-		{
-			return (NULL); // TODO: free paths
-		}
-		while (files)
-		{
-			if (ft_strcmp(files->content, str) == 0)
-			{
-				ft_lstclear(&files, free);
-				return (paths[i]);
-			}
-			files = files->next;
-		}
-		ft_lstclear(&files, free);
-		i++;
-	}
-	return (NULL);
+	result = search_in_paths(paths, str);
+	if (!result)
+		free_paths(paths);
+	return (result);
 }
-
-// int main(int argc, char **argv)
-// {
-// 	// t_list *files = get_files_in_dir(argv[1]);
-// 	// if (files)
-// 	// {
-// 	// 	t_list *temp = files;
-// 	// 	while (temp)
-// 	// 	{
-// 	// 		__builtin_printf("%s\n", (char *)temp->content);
-// 	// 		temp = temp->next;
-// 	// 	}
-// 	// 	ft_lstclear(&files, free);
-// 	// }
-// 	// else
-// 	// {
-// 	// 	perror("Error");
-// 	// }
-
-// 	char *path = get_executable_path(argv[1]);
-// 	if (path)
-// 	{
-// 		__builtin_printf("Executable path: %s/%s\n", path, argv[1]);
-// 		free(path);
-// 	}
-// 	else
-// 	{
-// 		perror("Error");
-// 	}
-// }

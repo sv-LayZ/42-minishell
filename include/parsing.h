@@ -53,7 +53,7 @@ typedef struct t_token
 char	*reader(void);
 int history_process(char *line);
 char *expand_variables(const char *line);
-
+t_quote_type	get_quote_type(const char *value);
 
 // /* **********************************UTILS**************************************** */
 void free_commands(t_cmd *cmd);
