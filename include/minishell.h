@@ -27,6 +27,13 @@
 
 # define _POSIX_C_SOURCE 200809L
 
+typedef struct s_expand_data
+{
+	char	**result;
+	size_t	*j;
+	size_t	*result_size;
+}	t_expand_data;
+
 // /* **********************************SIGNALS**************************************** */
 void setup_sigint(void);
 void setup_sigquit(void);
@@ -120,5 +127,26 @@ extern int g_exit_status;
 // t_cmd *new_command(void);
 // t_cmd *parse_tokens(t_token *tokens);
 // t_token *line_lexer(const char *line);
+
+/* **********************************EXECUTION******************************** */
+char	*find_executable_in_path(char *cmd);
+int		setup_input_redirection(t_cmd *cmd);
+int		setup_output_redirection(t_cmd *cmd);
+int		execute_external_command(char **args);
+int		execute_builtin_with_redirections(t_cmd *cmd, int builtin_index);
+int		execute_external_with_redirections(t_cmd *cmd);
+int		execute_with_redirections(t_cmd *cmd);
+int		execute_command(t_cmd *cmd);
+
+/* **********************************EXECUTABLE******************************* */
+t_list	*get_files_in_dir(char *path);
+char	*get_executable_path(char *str);
+void	free_paths(char **paths);
+int		check_file_in_list(t_list *files, char *str);
+
+/* **********************************EXPAND_VARIABLES************************* */
+char	*expand_variables(const char *line);
+char	*expand_exit_status(char **result, size_t *j, size_t *result_size);
+int		handle_dollar_sign(const char *line, size_t *i, t_expand_data *data);
 
 #endif
