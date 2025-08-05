@@ -6,7 +6,7 @@
 /*   By: Hadia <Hadia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 21:35:47 by mregnaut          #+#    #+#             */
-/*   Updated: 2025/07/31 21:33:21 by Hadia            ###   ########.fr       */
+/*   Updated: 2025/08/05 23:52:57 by Hadia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,13 @@ int	builtin_exit(char **args)
 		exit(0);
 	if (!is_number(args[1]))
 	{
-		printf("minishell: exit: %s: numeric argument required\n", args[1]);
+		fprintf(stderr, "minishell: exit: %s: numeric argument required\n",
+			args[1]);
 		exit(2);
 	}
 	if (args[2])
 	{
-		printf("minishell: exit: too many arguments\n");
+		fprintf(stderr, "minishell: exit: too many arguments\n");
 		return (1);
 	}
 	exit_code = ft_atoi(args[1]);

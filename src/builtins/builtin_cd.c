@@ -6,7 +6,7 @@
 /*   By: Hadia <Hadia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 21:35:47 by mregnaut          #+#    #+#             */
-/*   Updated: 2025/07/31 21:33:15 by Hadia            ###   ########.fr       */
+/*   Updated: 2025/08/05 22:55:57 by Hadia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,13 @@ int	builtin_cd(char **args)
 		path = getenv("HOME");
 		if (!path)
 		{
-			printf("cd: HOME not set\n");
+			fprintf(stderr, "cd: HOME not set\n");
 			return (1);
 		}
 	}
 	else if (args[2])
 	{
-		printf("cd: too many arguments\n");
+		fprintf(stderr, "cd: too many arguments\n");
 		return (1);
 	}
 	else
