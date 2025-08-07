@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_unset.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Hadia <Hadia@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mattm <mattm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 21:35:47 by mregnaut          #+#    #+#             */
-/*   Updated: 2025/07/31 21:42:43 by Hadia            ###   ########.fr       */
+/*   Updated: 2025/08/07 16:48:48 by mattm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	builtin_unset(char **args)
 	i = 1;
 	while (args[i])
 	{
-		if (unsetenv(args[i]) != 0)
+		if (ft_unsetenv(args[i]) != 0)
 		{
 			perror("unset");
 			ret = 1;

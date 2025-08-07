@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_tokens.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Hadia <Hadia@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mattm <mattm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/01 00:00:00 by student           #+#    #+#             */
-/*   Updated: 2025/07/31 22:22:07 by Hadia            ###   ########.fr       */
+/*   Updated: 2025/08/07 16:47:34 by mattm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,17 +17,17 @@ static int	handle_redirection(t_cmd *current, t_token *tokens)
 	if (!tokens->next || tokens->next->type != TOKEN_FILE)
 		return (0);
 	if (tokens->type == TOKEN_REDIRECT_IN)
-		current->input_file = strdup(tokens->next->value);
+		current->input_file = ft_strdup(tokens->next->value);
 	else if (tokens->type == TOKEN_REDIRECT_OUT)
-		current->output_file = strdup(tokens->next->value);
+		current->output_file = ft_strdup(tokens->next->value);
 	else if (tokens->type == TOKEN_REDIRECT_APPEND)
 	{
-		current->output_file = strdup(tokens->next->value);
+		current->output_file = ft_strdup(tokens->next->value);
 		current->append_output = 1;
 	}
 	else if (tokens->type == TOKEN_HEREDOC)
 	{
-		current->input_file = strdup(tokens->next->value);
+		current->input_file = ft_strdup(tokens->next->value);
 		current->heredoc = 1;
 	}
 	return (1);

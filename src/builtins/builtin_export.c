@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_export.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Hadia <Hadia@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mattm <mattm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 21:35:47 by mregnaut          #+#    #+#             */
-/*   Updated: 2025/08/01 01:35:43 by Hadia            ###   ########.fr       */
+/*   Updated: 2025/08/07 16:48:48 by mattm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static void	print_exported_vars(void)
 
 static int	set_var_without_value(char *arg)
 {
-	if (setenv(arg, "", 1) != 0)
+	if (ft_setenv(arg, "", 1) != 0)
 	{
 		perror("export");
 		return (1);
@@ -56,7 +56,7 @@ static int	set_var_with_value(char *arg, char *equal_pos)
 	value = equal_pos + 1;
 	if (!key)
 		return (1);
-	if (setenv(key, value, 1) != 0)
+	if (ft_setenv(key, value, 1) != 0)
 	{
 		perror("export");
 		free(key);

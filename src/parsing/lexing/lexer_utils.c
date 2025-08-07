@@ -19,7 +19,7 @@ t_token	*new_token(const char *value, t_quote_type quoted)
 	token = malloc(sizeof(t_token));
 	if (!token)
 		return (NULL);
-	token->value = strdup(value);
+	token->value = ft_strdup(value);
 	token->quote_type = quoted;
 	token->type = get_token_type(value);
 	token->next = NULL;

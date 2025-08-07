@@ -18,7 +18,7 @@ t_quote_type	get_quote_type(const char *value)
 
 	if (!value)
 		return (NO_QUOTE);
-	len = strlen(value);
+	len = ft_strlen(value);
 	if (len >= 2 && value[0] == '\'' && value[len - 1] == '\'')
 		return (SINGLE_QUOTE);
 	else if (len >= 2 && value[0] == '"' && value[len - 1] == '"')
@@ -33,16 +33,15 @@ char	*remove_quotes(const char *str)
 
 	if (!str)
 		return (NULL);
-	len = strlen(str);
+	len = ft_strlen(str);
 	if (len >= 2 && ((str[0] == '"' && str[len - 1] == '"')
 			|| (str[0] == '\'' && str[len - 1] == '\'')))
 	{
 		res = malloc(len - 1);
 		if (!res)
 			return (NULL);
-		strncpy(res, str + 1, len - 2);
-		res[len - 2] = '\0';
+		ft_strlcpy(res, str + 1, len - 1);
 		return (res);
 	}
-	return (strdup(str));
+	return (ft_strdup(str));
 }

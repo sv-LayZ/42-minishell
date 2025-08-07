@@ -33,7 +33,8 @@ SRC = src/parsing/lexing/lexer.c \
 	src/builtins/builtin_export.c \
 	src/builtins/builtin_unset.c \
 	src/builtins/builtin_env.c \
-	src/builtins/builtin_exit.c
+	src/builtins/builtin_exit.c \
+	src/builtins/env_utils.c
 	
 HEADER = include/minishell.h
 

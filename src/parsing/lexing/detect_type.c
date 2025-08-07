@@ -35,8 +35,7 @@ static char	*extract_quoted_token(const char *input, int *i)
 	token = malloc(len + 1);
 	if (!token)
 		return (NULL);
-	strncpy(token, &input[start], len);
-	token[len] = '\0';
+	ft_strlcpy(token, &input[start], len + 1);
 	return (token);
 }
 
@@ -49,8 +48,7 @@ static char	*extract_operator_token(const char *input, int *i)
 	token = malloc(len + 1);
 	if (!token)
 		return (NULL);
-	strncpy(token, &input[*i], len);
-	token[len] = '\0';
+	ft_strlcpy(token, &input[*i], len + 1);
 	*i += len;
 	return (token);
 }
@@ -68,8 +66,7 @@ static char	*extract_word_token(const char *input, int *i)
 	token = malloc(len + 1);
 	if (!token)
 		return (NULL);
-	strncpy(token, &input[start], len);
-	token[len] = '\0';
+	ft_strlcpy(token, &input[start], len + 1);
 	return (token);
 }
 

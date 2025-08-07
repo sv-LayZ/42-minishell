@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mregnaut <mregnaut@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mattm <mattm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 21:35:47 by mregnaut          #+#    #+#             */
-/*   Updated: 2025/06/23 22:28:09 by mregnaut         ###   ########.fr       */
+/*   Updated: 2025/08/07 17:09:09 by mattm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,8 @@ int	builtin_exit(char **args);
 int	is_builtin(char *cmd);
 int	execute_builtin(int index, char **args);
 
-#endif
+/* Environment manipulation functions */
+int	ft_setenv(const char *key, const char *value, int overwrite);
+int	ft_unsetenv(const char *key);
 
+#endif

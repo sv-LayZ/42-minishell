@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Hadia <Hadia@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mattm <mattm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 21:06:01 by Hadia             #+#    #+#             */
-/*   Updated: 2025/07/31 21:19:29 by Hadia            ###   ########.fr       */
+/*   Updated: 2025/08/07 16:47:34 by mattm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	add_arg(t_cmd *cmd, char *arg)
 		new_args[i] = cmd->args[i];
 		i++;
 	}
-	new_args[i] = strdup(arg);
+	new_args[i] = ft_strdup(arg);
 	new_args[i + 1] = NULL;
 	free(cmd->args);
 	cmd->args = new_args;
