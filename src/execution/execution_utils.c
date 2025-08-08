@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Hadia <Hadia@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mattm <mattm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/01 00:00:00 by student           #+#    #+#             */
-/*   Updated: 2025/07/31 22:34:30 by Hadia            ###   ########.fr       */
+/*   Updated: 2025/08/07 17:53:18 by mattm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,111 @@ char	*find_executable_in_path(char *cmd)
 	return (result);
 }
 
+static char	*create_temp_filename(void)
+{
+	static int	counter = 0;
+	char		*filename;
+	char		*counter_str;
+	char		*temp;
+
+	counter_str = ft_itoa(counter++);
+	if (!counter_str)
+		return (NULL);
+	temp = ft_strjoin("/tmp/minishell_heredoc_", counter_str);
+	free(counter_str);
+	if (!temp)
+		return (NULL);
+	counter_str = ft_itoa(getpid());
+	if (!counter_str)
+	{
+		free(temp);
+		return (NULL);
+	}
+	filename = ft_strjoin(temp, counter_str);
+	free(temp);
+	free(counter_str);
+	return (filename);
+}
+
+static int	read_heredoc_content(const char *delimiter, int fd)
+{
+	char	*line;
+	size_t	delimiter_len;
+
+	delimiter_len = ft_strlen(delimiter);
+	ft_putstr_fd("> ", 1);
+	line = readline("");
+	while (line != NULL)
+	{
+		if (ft_strncmp(line, delimiter, delimiter_len) == 0
+			&& line[delimiter_len] == '\0')
+		{
+			free(line);
+			break ;
+		}
+		if (write(fd, line, ft_strlen(line)) == -1)
+		{
+			free(line);
+			return (-1);
+		}
+		if (write(fd, "\n", 1) == -1)
+		{
+			free(line);
+			return (-1);
+		}
+		free(line);
+		ft_putstr_fd("> ", 1);
+		line = readline("");
+	}
+	return (0);
+}
+
+static int	handle_heredoc(t_cmd *cmd)
+{
+	char	*temp_filename;
+	int		temp_fd;
+	int		read_fd;
+
+	temp_filename = create_temp_filename();
+	if (!temp_filename)
+		return (-1);
+	temp_fd = open(temp_filename, O_WRONLY | O_CREAT | O_TRUNC, 0600);
+	if (temp_fd == -1)
+	{
+		perror("open");
+		free(temp_filename);
+		return (-1);
+	}
+	if (read_heredoc_content(cmd->input_file, temp_fd) == -1)
+	{
+		close(temp_fd);
+		unlink(temp_filename);
+		free(temp_filename);
+		return (-1);
+	}
+	close(temp_fd);
+	read_fd = open(temp_filename, O_RDONLY);
+	if (read_fd == -1)
+	{
+		perror("open");
+		unlink(temp_filename);
+		free(temp_filename);
+		return (-1);
+	}
+	if (dup2(read_fd, STDIN_FILENO) == -1)
+	{
+		perror("dup2");
+		close(read_fd);
+		unlink(temp_filename);
+		free(temp_filename);
+		return (-1);
+	}
+	close(read_fd);
+	unlink(temp_filename);
+	free(temp_filename);
+	return (0);
+}
+
 int	setup_input_redirection(t_cmd *cmd)
 {
 	int	fd;
@@ -60,8 +165,7 @@ int	setup_input_redirection(t_cmd *cmd)
 		return (0);
 	if (cmd->heredoc)
 	{
-		ft_putstr_fd("minishell: heredoc not implemented yet\n", 2);
-		return (-1);
+		return (handle_heredoc(cmd));
 	}
 	fd = open(cmd->input_file, O_RDONLY);
 	if (fd == -1)
