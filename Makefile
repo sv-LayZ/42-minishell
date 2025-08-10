@@ -11,8 +11,10 @@ endif
 SRC = src/parsing/lexing/lexer.c \
 	src/parsing/lexing/lexer_utils.c \
 	src/parsing/lexing/detect_type.c \
+	src/parsing/lexing/extract_token_utils.c \
 	src/parsing/parsing.c \
 	src/parsing/parse_tokens.c \
+	src/parsing/parse_redirection.c \
 	src/parsing/parse/parse_utils.c \
 	src/parsing/parse/parse_types.c \
 	src/parsing/expand_variables.c \
