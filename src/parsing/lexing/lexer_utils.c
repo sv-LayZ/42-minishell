@@ -8,6 +8,7 @@ t_token *new_token(const char *value, t_quote_type quoted)
     token->value = strdup(value);
     token->quote_type = quoted;
     token->type = get_token_type(value);
+    token->no_space_after = 0;
     token->next = NULL;
     token->prev = NULL;
     return token;

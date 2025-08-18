@@ -59,6 +59,18 @@ t_token *line_lexer(const char *line)
             free_tokens(head);
             return NULL;
         }
+        // Determine adjacency with next characters: if next char is immediately
+        // another non-operator and not whitespace (e.g., '"' followed by '$'),
+        // mark current token as having no space after, to concatenate later.
+        int peek = index;
+        // If we stopped due to whitespace or end, there was space.
+        // Otherwise, if next char is not an operator and not whitespace, it's adjacent.
+        while (line[peek] && ft_isspace(line[peek]))
+            peek++;
+        if (peek == index && line[peek] != '\0' && !is_operator_char(line[peek]))
+        {
+            token->no_space_after = 1;
+        }
         append_token(&head, token);
     }
     refine_token_types(head);

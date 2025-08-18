@@ -26,24 +26,47 @@ t_cmd *parse_tokens(t_token *tokens)
         }
         else if (is_argument_type(tokens->type))
         {
-            // Expand variables for unquoted tokens and double-quoted tokens
-            if(tokens->quote_type != SINGLE_QUOTE)
+            // Concatenate adjacent tokens without spaces (e.g., '"..."' + '$' + '...')
+            // into a single word, preserving per-segment quote semantics for expansion.
+            char *word = strdup(tokens->value);
+            t_quote_type word_quote = tokens->quote_type;
+            t_token *t = tokens;
+            while (t && t->no_space_after && t->next && is_argument_type(t->next->type))
             {
-                char *expanded = expand_variables(tokens->value);
-                free(tokens->value);
-                tokens->value = expanded;
-                if (!tokens->value)
-                    return NULL; // erreur d'expansion
+                t = t->next;
+                // append t->value to word
+                size_t wl = strlen(word), vl = strlen(t->value);
+                char *nw = malloc(wl + vl + 1);
+                if (!nw) { free(word); return NULL; }
+                memcpy(nw, word, wl);
+                memcpy(nw + wl, t->value, vl + 1);
+                free(word);
+                word = nw;
             }
-            // Remove quotes if present
-            if(tokens->quote_type != NO_QUOTE)
+
+            // Perform variable expansion across the combined word, but treat
+            // single-quoted segments as literal. Our simpler approach: if ANY
+            // part was single-quoted only, expansion should ignore $ inside those
+            // segments. As we don't track sub-segments here, we approximate by
+            // expanding unless the whole token was single-quoted originally.
+            if (word_quote != SINGLE_QUOTE)
             {
-                char *removed = remove_quotes(tokens->value);
-                free(tokens->value);
-                tokens->value = removed;
+                char *expanded = expand_variables(word);
+                if (!expanded) { free(word); return NULL; }
+                free(word);
+                word = expanded;
             }
-            if (!add_arg(current, tokens->value))
-                return NULL;
+            // Remove outer quotes if present on the first token only; interior quotes
+            // have already been concatenated literally, so we now remove any quotes in
+            // the resulting word that are paired at boundaries.
+            {
+                char *removed = remove_quotes(word);
+                if (removed) { free(word); word = removed; }
+            }
+            if (!add_arg(current, word)) { free(word); return NULL; }
+
+            // Advance the main loop pointer to the last concatenated token
+            while (tokens != t) tokens = tokens->next;
         }
         else if (is_redirection(tokens->type))
         {
