@@ -6,7 +6,7 @@
 /*   By: Hadia <Hadia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/01 00:00:00 by student           #+#    #+#             */
-/*   Updated: 2025/07/31 22:34:30 by Hadia            ###   ########.fr       */
+/*   Updated: 2025/08/18 19:28:29 by Hadia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,21 @@ static char	*search_in_paths(char **paths, char *cmd)
 	return (NULL);
 }
 
+static void	free_string_array(char **array)
+{
+	int	i;
+
+	if (!array)
+		return ;
+	i = 0;
+	while (array[i])
+	{
+		free(array[i]);
+		i++;
+	}
+	free(array);
+}
+
 char	*find_executable_in_path(char *cmd)
 {
 	char	**paths;
@@ -49,6 +64,7 @@ char	*find_executable_in_path(char *cmd)
 	if (!paths)
 		return (NULL);
 	result = search_in_paths(paths, cmd);
+	free_string_array(paths);
 	return (result);
 }
 

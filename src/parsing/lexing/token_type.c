@@ -16,15 +16,15 @@ t_token_type	get_token_type(const char *value)
 {
 	if (!value)
 		return (TOKEN_OTHER);
-	if (strcmp(value, "|") == 0)
+	if (ft_strcmp(value, "|") == 0)
 		return (TOKEN_PIPE);
-	else if (strcmp(value, ">") == 0)
+	else if (ft_strcmp(value, ">") == 0)
 		return (TOKEN_REDIRECT_OUT);
-	else if (strcmp(value, "<") == 0)
+	else if (ft_strcmp(value, "<") == 0)
 		return (TOKEN_REDIRECT_IN);
-	else if (strcmp(value, ">>") == 0)
+	else if (ft_strcmp(value, ">>") == 0)
 		return (TOKEN_REDIRECT_APPEND);
-	else if (strcmp(value, "<<") == 0)
+	else if (ft_strcmp(value, "<<") == 0)
 		return (TOKEN_HEREDOC);
 	else if (value[0] == '$')
 		return (TOKEN_ENV_VAR);

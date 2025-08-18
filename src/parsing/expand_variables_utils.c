@@ -6,7 +6,7 @@
 /*   By: Hadia <Hadia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/01 00:00:00 by student           #+#    #+#             */
-/*   Updated: 2025/07/31 23:23:09 by Hadia            ###   ########.fr       */
+/*   Updated: 2025/08/18 19:39:51 by Hadia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*expand_exit_status(char **result, size_t *j, size_t *result_size)
 	exit_status_str = ft_itoa(g_exit_status);
 	if (!exit_status_str)
 		return (NULL);
-	val_len = strlen(exit_status_str);
+	val_len = ft_strlen(exit_status_str);
 	while (*j + val_len >= *result_size)
 	{
 		*result_size *= 2;
@@ -34,7 +34,7 @@ char	*expand_exit_status(char **result, size_t *j, size_t *result_size)
 		}
 		*result = new_result;
 	}
-	strcpy(&(*result)[*j], exit_status_str);
+	ft_strlcpy(&(*result)[*j], exit_status_str, val_len + 1);
 	*j += val_len;
 	free(exit_status_str);
 	return (*result);
@@ -69,7 +69,7 @@ static int	expand_env_var(char *var_name, t_expand_data *data)
 	env_value = getenv(var_name);
 	if (!env_value)
 		env_value = "";
-	val_len = strlen(env_value);
+	val_len = ft_strlen(env_value);
 	while (*(data->j) + val_len >= *(data->result_size))
 	{
 		*(data->result_size) *= 2;
@@ -81,7 +81,7 @@ static int	expand_env_var(char *var_name, t_expand_data *data)
 		}
 		*(data->result) = new_result;
 	}
-	strcpy(&(*(data->result))[*(data->j)], env_value);
+	ft_strlcpy(&(*(data->result))[*(data->j)], env_value, val_len + 1);
 	*(data->j) += val_len;
 	return (1);
 }

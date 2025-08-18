@@ -6,7 +6,7 @@
 /*   By: Hadia <Hadia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/01 00:00:00 by student           #+#    #+#             */
-/*   Updated: 2025/08/05 23:37:58 by Hadia            ###   ########.fr       */
+/*   Updated: 2025/08/18 19:28:29 by Hadia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,13 @@ t_cmd	*parse_tokens(t_token *tokens)
 	while (tokens)
 	{
 		if (!process_token(&head, &current, &tokens))
+		{
+			if (current)
+				free_commands(current);
+			if (head)
+				free_commands(head);
 			return (NULL);
+		}
 		tokens = tokens->next;
 	}
 	if (current)

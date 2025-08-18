@@ -6,7 +6,7 @@
 /*   By: Hadia <Hadia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 23:45:00 by Hadia             #+#    #+#             */
-/*   Updated: 2025/08/05 23:38:16 by Hadia            ###   ########.fr       */
+/*   Updated: 2025/08/18 19:39:51 by Hadia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,13 @@ static void	set_input_redirection(t_cmd *current, t_token_type type,
 	{
 		if (current->input_file)
 			free(current->input_file);
-		current->input_file = strdup(filename);
+		current->input_file = ft_strdup(filename);
 	}
 	else if (type == TOKEN_HEREDOC)
 	{
 		if (current->input_file)
 			free(current->input_file);
-		current->input_file = strdup(filename);
+		current->input_file = ft_strdup(filename);
 		current->heredoc = 1;
 	}
 }
@@ -62,14 +62,14 @@ static void	set_output_redirection(t_cmd *current, t_token_type type,
 	{
 		if (current->output_file)
 			free(current->output_file);
-		current->output_file = strdup(filename);
+		current->output_file = ft_strdup(filename);
 		current->append_output = 0;
 	}
 	else if (type == TOKEN_REDIRECT_APPEND)
 	{
 		if (current->output_file)
 			free(current->output_file);
-		current->output_file = strdup(filename);
+		current->output_file = ft_strdup(filename);
 		current->append_output = 1;
 	}
 }

@@ -47,7 +47,7 @@ t_quote_type	get_quote_type(const char *value)
 
 	if (!value)
 		return (NO_QUOTE);
-	len = strlen(value);
+	len = ft_strlen(value);
 	quote_check = check_quote_presence(value, len);
 	if (quote_check == 1)
 		return (SINGLE_QUOTE);
@@ -80,7 +80,7 @@ static char	*init_result_buffer(const char *str, size_t *len)
 
 	if (!str)
 		return (NULL);
-	*len = strlen(str);
+	*len = ft_strlen(str);
 	res = malloc(*len + 1);
 	return (res);
 }
