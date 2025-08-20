@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_unset.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mregnaut <mregnaut@student.42.fr>          +#+  +:+       +#+        */
+/*   By: Hadia <Hadia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 21:35:47 by mregnaut          #+#    #+#             */
-/*   Updated: 2025/06/23 21:42:17 by mregnaut         ###   ########.fr       */
+/*   Updated: 2025/07/31 21:42:43 by Hadia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ int	builtin_unset(char **args)
 
 	if (!args[1])
 		return (0);
-	
 	ret = 0;
 	i = 1;
 	while (args[i])
@@ -32,4 +31,4 @@ int	builtin_unset(char **args)
 		i++;
 	}
 	return (ret);
-} 
+}

@@ -1,38 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   detect_type.c                                      :+:      :+:    :+:   */
+/*   parse_types.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hvbyteam <hvbyteam@student.42.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 00:00:00 by hvbyteam          #+#    #+#             */
-/*   Updated: 2025/08/06 00:00:00 by hvbyteam         ###   ########.fr       */
+/*   Updated: 2025/07/31 00:00:00 by hvbyteam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/minishell.h"
 
-static void	skip_whitespace(const char *input, int *i)
+int	is_argument_type(t_token_type type)
 {
-	while (ft_isspace(input[*i]))
-		(*i)++;
+	return (type == TOKEN_COMMAND
+		|| type == TOKEN_ARGUMENT || type == TOKEN_ENV_VAR);
 }
 
-char	*extract_token(const char *input, int *index)
+int	is_redirection(t_token_type type)
 {
-	int		i;
-	char	*token;
-
-	i = *index;
-	skip_whitespace(input, &i);
-	if (input[i] == '\0')
-		return (NULL);
-	if (input[i] == '\'' || input[i] == '"')
-		token = extract_quoted_token(input, &i);
-	else if (is_operator_char(input[i]))
-		token = extract_operator_token(input, &i);
-	else
-		token = extract_word_token(input, &i);
-	*index = i;
-	return (token);
+	return (type == TOKEN_REDIRECT_OUT
+		|| type == TOKEN_REDIRECT_IN
+		|| type == TOKEN_REDIRECT_APPEND
+		|| type == TOKEN_HEREDOC);
 }

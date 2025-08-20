@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_env.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Hadia <Hadia@student.42.fr>                +#+  +:+       +#+        */
+/*   By: hadia <hadia@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/23 21:35:47 by mregnaut          #+#    #+#             */
-/*   Updated: 2025/08/18 21:31:19 by Hadia            ###   ########.fr       */
+/*   Created: Invalid date        by                   #+#    #+#             */
+/*   Updated: 2025/08/20 17:09:16 by hadia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+
 #include "../../include/builtin.h"
 
-extern char **environ;
+extern char	**environ;
 
 int	builtin_env(char **args)
 {
@@ -33,4 +34,4 @@ int	builtin_env(char **args)
 		i++;
 	}
 	return (0);
-} 
+}

@@ -3,24 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mregnaut <mregnaut@student.42.fr>          +#+  +:+       +#+        */
+/*   By: Hadia <Hadia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 21:35:47 by mregnaut          #+#    #+#             */
-/*   Updated: 2025/06/23 22:28:23 by mregnaut         ###   ########.fr       */
+/*   Updated: 2025/07/31 21:42:18 by Hadia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/builtin.h"
 
-
 int	is_builtin(char *cmd)
 {
-    static char	*builtin_str[] = {BUILTIN_CMDS};
-	int	i;
+	static char	*builtin_str[] = {BUILTIN_CMDS};
+	int			i;
 
 	if (!cmd)
 		return (-1);
-	
 	i = 0;
 	while (builtin_str[i])
 	{
@@ -33,9 +31,9 @@ int	is_builtin(char *cmd)
 
 int	execute_builtin(int index, char **args)
 {
-    static int	(*builtin_func[])(char **) = {BUILTIN_FUNCS};
+	static int	(*builtin_func[])(char **) = {BUILTIN_FUNCS};
 
 	if (index == -1)
 		return (-1);
 	return (builtin_func[index](args));
-} 
+}

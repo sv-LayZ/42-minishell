@@ -1,29 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin_pwd.c                                      :+:      :+:    :+:   */
+/*   detect_type_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Hadia <Hadia@student.42.fr>                +#+  +:+       +#+        */
+/*   By: hvbyteam <hvbyteam@student.42.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/23 21:35:47 by mregnaut          #+#    #+#             */
-/*   Updated: 2025/07/31 21:40:45 by Hadia            ###   ########.fr       */
+/*   Created: 2025/08/05 00:00:00 by hvbyteam          #+#    #+#             */
+/*   Updated: 2025/08/05 00:00:00 by hvbyteam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/builtin.h"
+#include "../../../include/minishell.h"
 
-int	builtin_pwd(char **args)
+void	handle_quoted_part(const char *input, int *i)
 {
-	char	*cwd;
+	char	quote;
 
-	(void)args;
-	cwd = getcwd(NULL, 0);
-	if (!cwd)
-	{
-		perror("pwd");
-		return (1);
-	}
-	printf("%s\n", cwd);
-	free(cwd);
-	return (0);
+	quote = input[*i];
+	(*i)++;
+	while (input[*i] && input[*i] != quote)
+		(*i)++;
+	if (input[*i] == quote)
+		(*i)++;
 }

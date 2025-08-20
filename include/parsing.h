@@ -12,6 +12,13 @@ typedef struct s_cmd
     struct s_cmd *next; // Pointer to the next command in a pipeline
 } t_cmd;
 
+typedef struct s_quote_data
+{
+	size_t	*i;
+	char	*res;
+	size_t	*j;
+	size_t	len;
+}	t_quote_data;
 
 typedef enum e_token_type
 {
@@ -54,7 +61,7 @@ typedef struct t_token
 char	*reader(void);
 int history_process(char *line);
 char *expand_variables(const char *line);
-
+t_quote_type	get_quote_type(const char *value);
 
 // /* **********************************UTILS**************************************** */
 void free_commands(t_cmd *cmd);
@@ -66,6 +73,9 @@ t_token *create_token(t_token_type type, const char *value, int quoted);
 void append_token(t_token **head, t_token *new_tok);
 int operator_token_length(const char *str);
 char *extract_token(const char *input, int *index);
+char *extract_quoted_token(const char *input, int *i);
+char *extract_operator_token(const char *input, int *i);
+char *extract_word_token(const char *input, int *i);
 int is_operator_char(char c);
 t_token *new_token(const char *value, t_quote_type quoted);
 t_token_type get_redirection_type(const char *line);
@@ -81,4 +91,5 @@ t_cmd *new_command(void);
 t_cmd *parsing(const char *line);
 t_cmd *parse_tokens(t_token *tokens);
 t_token *line_lexer(const char *line);
+int handle_redirection(t_cmd *current, t_token *tokens);
 #endif
