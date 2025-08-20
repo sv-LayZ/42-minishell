@@ -52,6 +52,7 @@ typedef struct t_token
     t_token_type type;
     char *value;
     t_quote_type quote_type;
+    int no_space_after; // 1 if next char in source was not whitespace/operator (tokens should be concatenated)
     struct t_token *next; // Pointer to the next token in the linked list
     struct t_token *prev; // Pointer to the previous token in the linked list
 } t_token;
