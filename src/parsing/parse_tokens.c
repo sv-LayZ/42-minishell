@@ -53,6 +53,7 @@ static t_cmd	*process_token(t_cmd **head, t_cmd **current, t_token **tokens)
 	if ((*tokens)->type == TOKEN_PIPE)
 	{
 		handle_pipe_token(head, current);
+		return ((t_cmd *)1);
 	}
 	else if (is_argument_type((*tokens)->type))
 	{

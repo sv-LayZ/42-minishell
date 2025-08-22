@@ -45,6 +45,14 @@ void print_commands(t_cmd *cmds);
 
 // /* **********************************EXECUTION************************************ */
 int	execute_command(t_cmd *cmd);
+int	execute_pipeline(t_cmd *cmd);
+int	setup_input_redirection(t_cmd *cmd);
+int	setup_output_redirection(t_cmd *cmd);
+int	is_builtin(char *cmd);
+int	execute_builtin(int builtin_index, char **args);
+int	execute_external_command(char **args);
+int	execute_with_redirections(t_cmd *cmd);
+char	*find_executable_in_path(char *cmd);
 
 // Global variable for exit status ($?)
 extern int g_exit_status;
