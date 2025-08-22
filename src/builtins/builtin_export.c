@@ -6,7 +6,7 @@
 /*   By: Hadia <Hadia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 21:35:47 by mregnaut          #+#    #+#             */
-/*   Updated: 2025/08/01 01:35:43 by Hadia            ###   ########.fr       */
+/*   Updated: 2025/08/22 15:31:06 by Hadia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,26 @@ static int	set_var_with_value(char *arg, char *equal_pos)
 static int	set_env_var(char *arg)
 {
 	char	*equal_pos;
+
+	if (!arg || !*arg || (!ft_isalpha(arg[0]) && arg[0] != '_'))
+	{
+		ft_putstr_fd("minishell: export: `", 2);
+		ft_putstr_fd(arg, 2);
+		ft_putstr_fd("': not a valid identifier\n", 2);
+		return (1);
+	}
+	int i = 1;
+	while (arg[i] && arg[i] != '=')
+	{
+		if (!ft_isalnum(arg[i]) && arg[i] != '_')
+		{
+			ft_putstr_fd("minishell: export: `", 2);
+			ft_putstr_fd(arg, 2);
+			ft_putstr_fd("': not a valid identifier\n", 2);
+			return (1);
+		}
+		i++;
+	}
 
 	equal_pos = ft_strchr(arg, '=');
 	if (!equal_pos)

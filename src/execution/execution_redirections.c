@@ -6,7 +6,7 @@
 /*   By: Hadia <Hadia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/01 00:00:00 by student           #+#    #+#             */
-/*   Updated: 2025/07/31 22:34:29 by Hadia            ###   ########.fr       */
+/*   Updated: 2025/08/22 15:31:06 by Hadia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,18 @@ int	execute_builtin_with_redirections(t_cmd *cmd, int builtin_index)
 	}
 	if (pid == 0)
 	{
-		if (setup_input_redirection(cmd) == -1)
-			exit(1);
-		if (setup_output_redirection(cmd) == -1)
-			exit(1);
+		if (cmd->redirs)
+		{
+			if (apply_ordered_redirs(cmd) == -1)
+				exit(1);
+		}
+		else
+		{
+			if (setup_input_redirection(cmd) == -1)
+				exit(1);
+			if (setup_output_redirection(cmd) == -1)
+				exit(1);
+		}
 		exit(execute_builtin(builtin_index, cmd->args));
 	}
 	else
@@ -44,10 +52,18 @@ int	execute_builtin_with_redirections(t_cmd *cmd, int builtin_index)
 
 static int	execute_child_with_redirections(t_cmd *cmd, char *executable_path)
 {
-	if (setup_input_redirection(cmd) == -1)
-		exit(1);
-	if (setup_output_redirection(cmd) == -1)
-		exit(1);
+	if (cmd->redirs)
+	{
+		if (apply_ordered_redirs(cmd) == -1)
+			exit(1);
+	}
+	else
+	{
+		if (setup_input_redirection(cmd) == -1)
+			exit(1);
+		if (setup_output_redirection(cmd) == -1)
+			exit(1);
+	}
 	if (execve(executable_path, cmd->args, environ) == -1)
 	{
 		perror("execve");

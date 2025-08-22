@@ -48,6 +48,7 @@ int	execute_command(t_cmd *cmd);
 int	execute_pipeline(t_cmd *cmd);
 int	setup_input_redirection(t_cmd *cmd);
 int	setup_output_redirection(t_cmd *cmd);
+int	apply_ordered_redirs(t_cmd *cmd);
 int	is_builtin(char *cmd);
 int	execute_builtin(int builtin_index, char **args);
 int	execute_external_command(char **args);
