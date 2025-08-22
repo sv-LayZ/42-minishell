@@ -22,6 +22,12 @@ int	builtin_env(char **args)
 	i = 0;
 	while (environ[i])
 	{
+		if (ft_strncmp(environ[i], "COLUMNS=", 8) == 0
+			|| ft_strncmp(environ[i], "LINES=", 6) == 0)
+		{
+			i++;
+			continue;
+		}
 		printf("%s\n", environ[i]);
 		i++;
 	}
