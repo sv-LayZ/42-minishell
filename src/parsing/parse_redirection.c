@@ -6,7 +6,7 @@
 /*   By: Hadia <Hadia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 23:45:00 by Hadia             #+#    #+#             */
-/*   Updated: 2025/08/05 23:38:16 by Hadia            ###   ########.fr       */
+/*   Updated: 2025/08/22 14:33:25 by Hadia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,28 @@ static void	set_redirection_file(t_cmd *current, t_token_type type,
 		set_output_redirection(current, type, filename);
 }
 
+void	add_redir(t_cmd *cmd, t_redir_type type, char *filename)
+{
+	t_redir *node;
+	t_redir *tmp;
+
+	node = malloc(sizeof(t_redir));
+	if (!node)
+		return ;
+	node->type = type;
+	node->filename = strdup(filename);
+	node->next = NULL;
+	if (!cmd->redirs)
+		cmd->redirs = node;
+	else
+	{
+		tmp = cmd->redirs;
+		while (tmp->next)
+			tmp = tmp->next;
+		tmp->next = node;
+	}
+}
+
 int	handle_redirection(t_cmd *current, t_token *tokens)
 {
 	char	*filename;
@@ -96,6 +118,15 @@ int	handle_redirection(t_cmd *current, t_token *tokens)
 	if (!processed_filename)
 		return (0);
 	set_redirection_file(current, tokens->type, processed_filename);
+	/* stocker dans liste ordonnée */
+	if (tokens->type == TOKEN_REDIRECT_IN)
+		add_redir(current, R_IN, processed_filename);
+	else if (tokens->type == TOKEN_REDIRECT_APPEND)
+		add_redir(current, R_OUT_APPEND, processed_filename);
+	else if (tokens->type == TOKEN_REDIRECT_OUT)
+		add_redir(current, R_OUT_TRUNC, processed_filename);
+	else if (tokens->type == TOKEN_HEREDOC)
+		add_redir(current, R_HEREDOC, processed_filename);
 	should_free = (tokens->next->quote_type != NO_QUOTE
 			|| (tokens->next->quote_type != SINGLE_QUOTE
 				&& processed_filename != filename));

@@ -6,7 +6,7 @@
 /*   By: Hadia <Hadia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 21:35:47 by mregnaut          #+#    #+#             */
-/*   Updated: 2025/08/01 01:35:43 by Hadia            ###   ########.fr       */
+/*   Updated: 2025/08/22 14:33:23 by Hadia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,22 @@ static int	set_env_var(char *arg)
 	return (set_var_with_value(arg, equal_pos));
 }
 
+static int is_valid_identifier(const char *s)
+{
+	int i;
+
+	if (!s || (!ft_isalpha(s[0]) && s[0] != '_'))
+		return (0);
+	i = 1;
+	while (s[i] && s[i] != '=')
+	{
+		if (!ft_isalnum(s[i]) && s[i] != '_')
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
 int	builtin_export(char **args)
 {
 	int	i;
@@ -90,7 +106,14 @@ int	builtin_export(char **args)
 	i = 1;
 	while (args[i])
 	{
-		if (set_env_var(args[i]) != 0)
+		if (!is_valid_identifier(args[i]))
+		{
+			ft_putstr_fd("export: `", 2);
+			ft_putstr_fd(args[i], 2);
+			ft_putstr_fd("': not a valid identifier\n", 2);
+			ret = 1;
+		}
+		else if (set_env_var(args[i]) != 0)
 			ret = 1;
 		i++;
 	}

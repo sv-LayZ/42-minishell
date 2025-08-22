@@ -1,0 +1,2 @@
+execve("./minishell", ["./minishell"], 0x7ffd2a5f6598 /* 34 vars */) = 0
++++ exited with 0 +++

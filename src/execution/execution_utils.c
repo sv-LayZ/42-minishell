@@ -6,7 +6,7 @@
 /*   By: Hadia <Hadia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/01 00:00:00 by student           #+#    #+#             */
-/*   Updated: 2025/07/31 22:34:30 by Hadia            ###   ########.fr       */
+/*   Updated: 2025/08/22 14:33:24 by Hadia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,5 +104,48 @@ int	setup_output_redirection(t_cmd *cmd)
 		return (-1);
 	}
 	close(fd);
+	return (0);
+}
+
+/* Apply ordered redirections list (left-to-right). Return 0 success, 1 error. */
+int	apply_redirections(t_cmd *cmd)
+{
+	t_redir *r;
+	int	fd;
+
+	r = cmd->redirs;
+	while (r)
+	{
+		if (r->type == R_HEREDOC)
+		{
+			ft_putstr_fd("minishell: heredoc not implemented yet\n", 2);
+			return (1);
+		}
+		if (r->type == R_IN)
+		{
+			fd = open(r->filename, O_RDONLY);
+			if (fd == -1 || dup2(fd, STDIN_FILENO) == -1)
+			{
+				perror(r->filename);
+				if (fd != -1)
+					close(fd);
+				return (1);
+			}
+			close(fd);
+		}
+		else if (r->type == R_OUT_TRUNC || r->type == R_OUT_APPEND)
+		{
+			fd = open(r->filename, O_WRONLY | O_CREAT | (r->type == R_OUT_APPEND ? O_APPEND : O_TRUNC), 0644);
+			if (fd == -1 || dup2(fd, STDOUT_FILENO) == -1)
+			{
+				perror(r->filename);
+				if (fd != -1)
+					close(fd);
+				return (1);
+			}
+			close(fd);
+		}
+		r = r->next;
+	}
 	return (0);
 }

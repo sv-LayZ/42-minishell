@@ -6,7 +6,7 @@
 /*   By: Hadia <Hadia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 21:06:01 by Hadia             #+#    #+#             */
-/*   Updated: 2025/07/31 21:19:29 by Hadia            ###   ########.fr       */
+/*   Updated: 2025/08/22 14:33:26 by Hadia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ t_cmd	*new_command(void)
 	cmd->output_file = NULL;
 	cmd->append_output = 0;
 	cmd->heredoc = 0;
+	cmd->redirs = NULL;
 	cmd->next = NULL;
 	return (cmd);
 }
@@ -94,6 +95,22 @@ void	free_commands(t_cmd *cmd)
 			free(tmp->input_file);
 		if (tmp->output_file)
 			free(tmp->output_file);
+		if (tmp->redirs)
+			free_redirs(tmp->redirs);
+		free(tmp);
+	}
+}
+
+void	free_redirs(t_redir *r)
+{
+	t_redir *tmp;
+
+	while (r)
+	{
+		tmp = r;
+		r = r->next;
+		if (tmp->filename)
+			free(tmp->filename);
 		free(tmp);
 	}
 }

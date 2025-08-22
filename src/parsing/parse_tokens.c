@@ -6,7 +6,7 @@
 /*   By: Hadia <Hadia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/01 00:00:00 by student           #+#    #+#             */
-/*   Updated: 2025/08/05 23:37:58 by Hadia            ###   ########.fr       */
+/*   Updated: 2025/08/22 14:33:25 by Hadia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,12 @@ static int	process_argument_token(t_cmd *current, t_token *tokens)
 		free(tokens->value);
 		tokens->value = removed;
 	}
-	if (!add_arg(current, tokens->value))
-		return (0);
+	/* si expansion produit chaine vide et pas de quotes: on ignore */
+	if (!(tokens->value[0] == '\0' && tokens->quote_type == NO_QUOTE))
+	{
+		if (!add_arg(current, tokens->value))
+			return (0);
+	}
 	return (1);
 }
 

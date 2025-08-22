@@ -1,16 +1,32 @@
 #ifndef PARSING_H
 #define PARSING_H
 
+typedef enum e_redir_type
+{
+    R_IN,
+    R_OUT_TRUNC,
+    R_OUT_APPEND,
+    R_HEREDOC
+}   t_redir_type;
+
+typedef struct s_redir
+{
+    t_redir_type        type;
+    char                *filename; /* expanded filename */
+    struct s_redir      *next;
+}   t_redir;
+
 typedef struct s_cmd
 {
-    char *name;
-    char **args;
-    int heredoc; // 0 for no heredoc, 1 for heredoc
-    char *input_file;
-    char *output_file;
-    int append_output; // 0 for overwrite, 1 for append
+    char        *name;
+    char        **args;
+    int         heredoc; // 0 for no heredoc, 1 for heredoc
+    char        *input_file;      /* legacy single tracking (will mirror last R_IN) */
+    char        *output_file;     /* legacy single tracking (will mirror last OUT) */
+    int         append_output;    /* legacy flag */
+    t_redir     *redirs;          /* ordered redirections */
     struct s_cmd *next; // Pointer to the next command in a pipeline
-} t_cmd;
+}   t_cmd;
 
 typedef struct s_quote_data
 {
@@ -91,4 +107,7 @@ t_cmd *parsing(const char *line);
 t_cmd *parse_tokens(t_token *tokens);
 t_token *line_lexer(const char *line);
 int handle_redirection(t_cmd *current, t_token *tokens);
+void add_redir(t_cmd *cmd, t_redir_type type, char *filename);
+int apply_redirections(t_cmd *cmd);
+void free_redirs(t_redir *r);
 #endif
