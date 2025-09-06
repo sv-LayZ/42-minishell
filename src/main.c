@@ -32,7 +32,7 @@ int	main(int ac, char **av)
 		cmds = parsing(line);
 		if (cmds && cmds->args && cmds->args[0])
 		{
-			g_exit_status = execute_command(cmds);
+			g_exit_status = execute_pipeline(cmds);
 		}
 		free_commands(cmds);
 		free(line);

@@ -27,6 +27,7 @@ SRC = src/parsing/lexing/lexer.c \
 	src/execution/execution_utils.c \
 	src/execution/execution_external.c \
 	src/execution/execution_redirections.c \
+	src/execution/pipeline.c \
 	src/main.c \
 	src/builtins/builtin_utils.c \
 	src/builtins/builtin_echo.c \
